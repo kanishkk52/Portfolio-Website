@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
 import { projects, categories } from "../data/projects";
 import ContactCTA from "../components/ContactCTA";
+import Constellation from "../components/Constellation";
 
 export default function Home({ theme, onToggleTheme }) {
   const [activeCategory, setActiveCategory] = useState("All Work");
@@ -130,6 +131,7 @@ export default function Home({ theme, onToggleTheme }) {
         
 {/* ABOUT */}
 <section id="about" className="about-section">
+   <Constellation />
   <div className="page-shell about-inner">
     <span className="section-kicker">
       02 / A LITTLE ABOUT ME
