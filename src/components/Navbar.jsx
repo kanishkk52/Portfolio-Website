@@ -16,100 +16,85 @@ export default function Navbar({ theme, onToggleTheme }) {
       return;
     }
 
-    const sectionIds = ["selected-work", "about", "contact"];
-    let observer;
+    let animationFrame;
 
     const updateActiveSection = () => {
-      const hash = window.location.hash.replace("#", "");
+      const activationLine = window.innerHeight * 0.4;
 
-      if (hash === "about" || hash === "contact") {
-        setActiveSection(hash);
+      const contact = document.getElementById("contact");
+      const about = document.getElementById("about");
+      const selectedWork = document.getElementById("selected-work");
+
+      const contactTop = contact?.getBoundingClientRect().top;
+      const aboutTop = about?.getBoundingClientRect().top;
+      const workTop = selectedWork?.getBoundingClientRect().top;
+
+      if (contactTop != null && contactTop <= activationLine) {
+        setActiveSection("contact");
+      } else if (aboutTop != null && aboutTop <= activationLine) {
+        setActiveSection("about");
+      } else if (workTop != null && workTop <= activationLine) {
+        setActiveSection("work");
       } else {
         setActiveSection("home");
       }
     };
 
-    const frame = requestAnimationFrame(() => {
-      const sections = sectionIds
-        .map((id) => document.getElementById(id))
-        .filter(Boolean);
+    // Wait for the page sections to render.
+    animationFrame = requestAnimationFrame(updateActiveSection);
 
-      if (!sections.length) {
-        updateActiveSection();
-        return;
-      }
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          const visibleSections = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort(
-              (a, b) =>
-                b.intersectionRatio - a.intersectionRatio
-            );
-
-          if (visibleSections.length > 0) {
-  const sectionId = visibleSections[0].target.id;
-
-  setActiveSection(
-    sectionId === "selected-work" ? "work" : sectionId
-  );
-} else {
-  const selectedWork = document.getElementById("selected-work");
-  const about = document.getElementById("about");
-  const contact = document.getElementById("contact");
-
-  const threshold = window.innerHeight * 0.4;
-
-  const selectedWorkTop = selectedWork?.getBoundingClientRect().top;
-  const aboutTop = about?.getBoundingClientRect().top;
-  const contactTop = contact?.getBoundingClientRect().top;
-
-  if (contactTop != null && contactTop <= threshold) {
-    setActiveSection("contact");
-  } else if (aboutTop != null && aboutTop <= threshold) {
-    setActiveSection("about");
-  } else if (
-    selectedWorkTop != null &&
-    selectedWorkTop <= threshold
-  ) {
-    setActiveSection("work");
-  } else {
-    setActiveSection("home");
-  }
-}
-        },
-        {
-          root: null,
-          rootMargin: "-20% 0px -55% 0px",
-          threshold: [0, 0.1, 0.25, 0.5],
-        }
-      );
-
-      sections.forEach((section) => observer.observe(section));
-      updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, {
+      passive: true,
     });
+    window.addEventListener("resize", updateActiveSection);
 
     return () => {
-      cancelAnimationFrame(frame);
-      observer?.disconnect();
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
     };
-  }, [isWorkPage, location.pathname, location.hash]);
+  }, [isWorkPage, location.pathname]);
 
   const navClass = (section) =>
     activeSection === section ? "nav-active" : "";
 
+  const scrollToSection = (event, sectionId) => {
+    // Let React Router navigate normally from other pages.
+    if (location.pathname !== "/") return;
+
+    event.preventDefault();
+
+    const section = document.getElementById(sectionId);
+
+    if (!section) {
+      console.warn(`Section with id "${sectionId}" was not found.`);
+      return;
+    }
+
+    window.history.replaceState(null, "", `/#${sectionId}`);
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    setActiveSection(sectionId);
+  };
+
   return (
     <header className="site-header">
       <nav className="nav-shell" aria-label="Main navigation">
+        {/* Brand */}
         <Link className="wordmark" to="/">
           KK's Canvas<span>®</span>
         </Link>
 
+        {/* Descriptor */}
         <span className="nav-note">
           Independent Graphic Designer
         </span>
 
+        {/* Navigation links */}
         <div className="nav-links">
           <Link to="/" className={navClass("home")}>
             Home
@@ -119,22 +104,33 @@ export default function Navbar({ theme, onToggleTheme }) {
             Work
           </Link>
 
-          <Link to="/#about" className={navClass("about")}>
+          <Link
+            to="/#about"
+            className={navClass("about")}
+            onClick={(event) => scrollToSection(event, "about")}
+          >
             About
-          </Link>
-
-          <Link to="/#contact" className={navClass("contact")}>
-            Contact
           </Link>
 
           <Link
             to="/#contact"
+            className={navClass("contact")}
+            onClick={(event) => scrollToSection(event, "contact")}
+          >
+            Contact
+          </Link>
+
+          {/* Availability CTA */}
+          <Link
+            to="/#contact"
             className="availability"
+            onClick={(event) => scrollToSection(event, "contact")}
           >
             <span className="availability-dot" />
             Available for projects
           </Link>
 
+          {/* Theme toggle */}
           <button
             type="button"
             className="theme-toggle"

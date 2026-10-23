@@ -142,7 +142,7 @@ export default function Home({ theme, onToggleTheme }) {
         <h2>
           Curious by nature.
           <br />
-          <span className="hero-italic">Intentional</span> by design.
+          <span className="hero-highlight-word">Intentional</span> {" "} by design.
         </h2>
 
         <div className="about-bottom">
@@ -160,15 +160,25 @@ export default function Home({ theme, onToggleTheme }) {
         </div>
       </div>
 
-      <div className="about-portrait">
-        <img
-          src="/images/profile.png"
-          alt="Portrait of the designer"
-          loading="lazy"
-          
-        />
-        
-      </div>
+      
+
+<div className="about-portrait">
+  <img
+    src="/images/profile.png"
+    alt="Portrait of Kanishk Kukreja"
+    loading="lazy"
+  />
+
+  <div className="portrait-name-overlay">
+    <span className="portrait-name-label" >THE DESIGNER</span>
+    <h3>
+      KANISHK<br></br>
+      KUKREJA
+    </h3>
+
+  </div>
+</div>
+
     </div>
   </div>
 </section>

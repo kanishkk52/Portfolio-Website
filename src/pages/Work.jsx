@@ -99,29 +99,12 @@ export default function Work({ theme, onToggleTheme }) {
           </div>
         )}
 
-        <section className="work-bottom-cta">
-  <div className="work-cta-copy">
-    <span className="section-kicker">HAVE A PROJECT IN MIND?</span>
-    <h2>
-      Let's make
-      <br />
-      something <span>distinct.</span>
-    </h2>
-    <p>
-      Good ideas deserve thoughtful design. Let's build something
-      worth remembering.
-    </p>
-  </div>
-
-  <Link to="/#contact" className="work-cta-button">
-    <span>LET'S CONNECT</span>
-    <span className="work-cta-arrow" aria-hidden="true">↗</span>
-  </Link>
+        
 
   <span className="work-cta-index" aria-hidden="true">
     KK® — 2026
   </span>
-</section>
+
       </main>
 
 <ContactCTA />

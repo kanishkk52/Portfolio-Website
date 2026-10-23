@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function ContactCTA() {
   return (
-    <section className="home-contact-cta-section">
+    <section id="contact" className="contact-cta">
       <div className="home-work-cta">
         <div className="home-work-cta-copy">
           <span className="home-work-cta-kicker">

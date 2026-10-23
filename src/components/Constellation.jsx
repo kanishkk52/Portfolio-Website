@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function Constellation() {
+export default function Constellation({ theme: themeProp }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -26,12 +26,16 @@ export default function Constellation() {
     };
 
     const getParticleColor = () => {
-      return document
-        .querySelector(".app-shell")
-        ?.classList.contains("theme-dark")
-        ? "245, 245, 240"
-        : "32, 32, 30";
-    };
+    const currentTheme =
+    themeProp ??
+    (document.querySelector(".app-shell")?.classList.contains("theme-dark")
+      ? "dark"
+      : "light");
+
+    return currentTheme === "dark"
+    ? "245, 245, 240"
+    : "32, 32, 30";
+};
 
     const createParticles = () => {
       const area = width * height;

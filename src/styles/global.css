@@ -265,9 +265,9 @@ a:focus-visible {
   letter-spacing: -0.075em;
 }
 
-.period {
+/* .period {
   color: #d6f36a;
-}
+} */
 
 .work-count {
   color: var(--muted);
@@ -2846,3 +2846,491 @@ a:focus-visible {
   z-index: 1;
 }
 
+
+/* About portrait — preserve original shape */
+
+.about-portrait {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+
+  /* Original arched portrait silhouette */
+  border-radius: 250px;
+  background: #292820;
+  cursor: pointer;
+}
+
+.about-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(100%);
+  transform: none;
+
+  transition: filter 500ms ease;
+}
+
+/* Dark gradient remains clipped to the original portrait shape */
+.about-portrait .portrait-name-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+  /* Keep text safely inside the portrait */
+  padding: 24px 22px 30px;
+
+  color: #fffaf0;
+  background: linear-gradient(
+    to bottom,
+    transparent 48%,
+    rgb(18 18 17 / 20%) 65%,
+    rgb(18 18 17 / 88%) 100%
+  );
+
+  opacity: 0;
+  transform: none;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.portrait-name-label {
+  margin-bottom: 9px;
+  color: #d6f36a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.about-portrait .portrait-name-overlay h3 {
+  max-width: 100%;
+  margin: 0;
+
+  font-size: clamp(23px, 2.5vw, 38px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.portrait-name-overlay h3 span {
+  color: #d6f36a;
+}
+
+.portrait-name-caption {
+  margin-top: 12px;
+  max-width: 100%;
+  font-size: 7px;
+  line-height: 1.5;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+}
+
+/* Hover: color changes, shape and crop remain unchanged */
+.about-portrait:hover img {
+  filter: grayscale(0%);
+}
+
+.about-portrait:hover .portrait-name-overlay {
+  opacity: 1;
+}
+
+/* Mobile/touch: keep the name visible and contained */
+@media (hover: none) {
+  .about-portrait img {
+    filter: grayscale(100%);
+  }
+
+  .about-portrait .portrait-name-overlay {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-portrait img,
+  .about-portrait .portrait-name-overlay {
+    transition: none;
+  }
+}
+
+
+
+/* ==========================================
+   KK'S CANVAS — THEMED SPLASH SCREEN
+========================================== */
+
+.splash-screen {
+  --splash-bg: #f8f7f4;
+  --splash-text: #20201e;
+  --splash-muted: #77766f;
+  --splash-line: #deddd7;
+  --splash-accent: #8a9e43;
+
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  isolation: isolate;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: clamp(24px, 5vw, 64px);
+  overflow: hidden;
+
+  color: var(--splash-text);
+  background: var(--splash-bg);
+
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 300ms ease,
+    color 300ms ease;
+
+  will-change: opacity, transform, clip-path;
+}
+
+/* Dark mode */
+.splash-screen.splash-theme-dark {
+  --splash-bg: #151515;
+  --splash-text: #f5f5f0;
+  --splash-muted: #aaa9a2;
+  --splash-line: #393a34;
+  --splash-accent: #d6f36a;
+}
+
+/* Keep constellation behind all splash content */
+.splash-screen .constellation-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.splash-screen .constellation-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Subtle texture */
+.splash-grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.055;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  mix-blend-mode: soft-light;
+}
+
+.splash-topline,
+.splash-center,
+.splash-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.splash-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.splash-brand {
+  font-size: 22px;
+  letter-spacing: -1.5px;
+}
+
+.splash-reg {
+  color: var(--splash-accent);
+  font-size: 11px;
+  vertical-align: top;
+}
+
+.splash-center {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto 0;
+}
+
+.splash-monogram {
+  margin-bottom: 30px;
+
+  color: var(--splash-accent);
+  font-size: clamp(60px, 13vw, 150px);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.12em;
+}
+
+.splash-monogram span {
+  color: var(--splash-text);
+}
+
+.splash-monogram i {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 0.18em;
+  font-style: normal;
+  vertical-align: top;
+  letter-spacing: 0;
+}
+
+.splash-center h1 {
+  margin: 0;
+  color: var(--splash-text);
+
+  font-size: clamp(38px, 7.5vw, 100px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.075em;
+}
+
+.splash-center h1 span {
+  color: var(--splash-accent);
+}
+
+.splash-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+
+  max-width: 520px;
+  margin-top: 35px;
+
+  color: var(--splash-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+}
+
+.splash-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px 20px;
+  align-items: center;
+}
+
+.splash-status,
+.splash-percentage {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.splash-status {
+  color: var(--splash-muted);
+}
+
+.splash-percentage {
+  color: var(--splash-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.splash-progress-track {
+  grid-column: 1 / -1;
+  height: 2px;
+  overflow: hidden;
+  background: var(--splash-line);
+}
+
+.splash-progress-fill {
+  height: 100%;
+  background: var(--splash-accent);
+  transition: width 100ms linear;
+}
+
+/* Smooth exit: fade, lift, and reveal the page underneath */
+.splash-screen.splash-exit {
+  opacity: 0;
+  transform: translateY(-18px);
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .splash-screen {
+    padding: 24px;
+  }
+
+  .splash-topline {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .splash-brand {
+    font-size: 20px;
+  }
+
+  .splash-monogram {
+    margin-bottom: 25px;
+  }
+
+  .splash-caption {
+    font-size: 8px;
+    line-height: 1.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen,
+  .splash-progress-fill {
+    transition: none;
+  }
+}
+.hero-highlight-word {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 500;
+  z-index: 0;
+}
+
+.hero-highlight-word::before {
+  content: "";
+  position: absolute;
+  left: -0.04em;
+  right: -0.04em;
+  top: 12%;
+  bottom: -5%;
+  background: #d6f36a;
+  z-index: -1;
+}
+
+/* Dark theme: retain the same lime highlight */
+.theme-dark .hero-highlight-word::before {
+  background: #d6f36a;
+}
+
+/* Default / light theme */
+.hero-highlight-word {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  color: inherit;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 500;
+  z-index: 0;
+}
+
+.hero-highlight-word::before {
+  content: "";
+  position: absolute;
+  left: -0.04em;
+  right: -0.04em;
+  top: 12%;
+  bottom: -5%;
+  background: #d6f36a;
+  z-index: -1;
+}
+
+/* Dark theme: white highlight and black text */
+.theme-dark .hero-highlight-word {
+  color: #000;
+}
+
+.theme-dark .hero-highlight-word::before {
+  background: #fff;
+}
+#contact {
+  scroll-margin-top: 80px;
+}
+
+/* Keep the CTA panel inset from the viewport edges */
+.contact-cta {
+  width: calc(100% - 96px);
+  max-width: 1440px;
+  margin: 64px auto 32px;
+  box-sizing: border-box;
+  position: relative;
+  scroll-margin-top: 80px;
+}
+
+/* Preserve the panel's internal spacing */
+.contact-cta {
+  padding: 64px;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .contact-cta {
+    width: calc(100% - 32px);
+    margin: 40px auto 24px;
+    padding: 32px 24px;
+  }
+}
+
+.portrait-name-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+
+  width: 100%;
+  padding: 0 8% 10%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.portrait-name-label {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.portrait-name-overlay h3 {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+
+  font-size: clamp(24px, 5vw, 36px);
+  line-height: 1;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+.portrait-name-overlay h3 span {
+  color: #d6f36a;
+}
+
+.portrait-name-caption {
+  width: 100%;
+  margin-top: 12px;
+  text-align: center;
+
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.6px;
+}
