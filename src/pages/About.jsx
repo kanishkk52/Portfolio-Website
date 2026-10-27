@@ -35,12 +35,24 @@ const skills = [
     items: ["UI Design", "Web Design", "Design Systems", "Prototyping"],
   },
   {
+    title: "Softwares",
+    items: ["Adobe Illustrator", "Adobe Photoshop", "Figma" , "Premiere Pro" , "Autodesk Fusion 360 "],
+  },
+  {
     title: "Creative Practice",
-    items: ["Photography", "Visual Research", "Composition", "Experimentation"],
+    items: ["Professional Photography", "Videography", "Drone" ,"Event Management"],
   },
   {
     title: "Technology",
     items: ["HTML & CSS", "JavaScript", "React", "Python"],
+  },
+  {
+    title: "Languages I Speak",
+    items: ["English", "Hindi", "Japanese"]
+  },
+  {
+    title: "Other Skills",
+    items: ["3D Printing", "3D Slicer"]
   },
 ];
 
