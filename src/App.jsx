@@ -8,7 +8,9 @@ import {
 
 import SplashScreen from "./components/SplashScreen";
 import ScrollToTop from "./components/ScrollToTop";
+
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Work from "./pages/Work";
 import ProjectDetail from "./pages/ProjectDetail";
 
@@ -41,9 +43,11 @@ function App() {
       {/* Splash appears on each full page load, not route changes */}
       <SplashScreen theme={theme} />
 
+      {/* Scroll to top when navigating between routes */}
       <ScrollToTop />
 
       <Routes>
+        {/* Home */}
         <Route
           path="/"
           element={
@@ -54,6 +58,18 @@ function App() {
           }
         />
 
+        {/* About Me */}
+        <Route
+          path="/about"
+          element={
+            <About
+              theme={theme}
+              onToggleTheme={toggleTheme}
+            />
+          }
+        />
+
+        {/* All Work */}
         <Route
           path="/work"
           element={
@@ -64,6 +80,7 @@ function App() {
           }
         />
 
+        {/* Individual Project Details */}
         <Route
           path="/work/:projectId"
           element={

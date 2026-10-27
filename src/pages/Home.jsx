@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
@@ -144,7 +145,10 @@ export default function Home({ theme, onToggleTheme }) {
 
         {/* ABOUT */}
         <section id="about" className="about-section">
-          <Constellation />
+          <Constellation
+  theme={theme}
+  interactiveGlow
+/>
 
           <div className="page-shell about-inner">
             <span className="section-kicker">
@@ -171,9 +175,11 @@ export default function Home({ theme, onToggleTheme }) {
                     serves the idea.
                   </p>
 
-                  <a href="#contact" className="text-link">
-                    Let's connect <span>↗</span>
-                  </a>
+                  
+                  <Link to="/about" className="text-link">
+                  Learn More <span>↗</span>
+                  </Link>
+
                 </div>
               </div>
 

@@ -55,7 +55,10 @@ export default function SplashScreen({ theme = "light" }) {
       role="status"
       aria-label="Loading KK's Canvas portfolio"
     >
-      <Constellation theme={theme} />
+                <Constellation
+        theme={theme}
+        interactiveGlow
+      />
 
       <div className="splash-grain" aria-hidden="true" />
 

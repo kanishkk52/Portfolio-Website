@@ -1,7 +1,10 @@
 
 import { useEffect, useRef } from "react";
 
-export default function Constellation({ theme: themeProp }) {
+export default function Constellation({
+  theme: themeProp,
+  interactiveGlow = false,
+}) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -19,23 +22,15 @@ export default function Constellation({ theme: themeProp }) {
     let height = 0;
     let particles = [];
 
-    const mouse = {
-      x: null,
-      y: null,
-      radius: 120,
+    const mouse = { x: null, y: null, radius: 180 };
+
+    const isDark = () => {
+      if (themeProp) return themeProp === "dark";
+
+      return document
+        .querySelector(".app-shell")
+        ?.classList.contains("theme-dark") ?? false;
     };
-
-    const getParticleColor = () => {
-    const currentTheme =
-    themeProp ??
-    (document.querySelector(".app-shell")?.classList.contains("theme-dark")
-      ? "dark"
-      : "light");
-
-    return currentTheme === "dark"
-    ? "245, 245, 240"
-    : "32, 32, 30";
-};
 
     const createParticles = () => {
       const area = width * height;
@@ -66,12 +61,30 @@ export default function Constellation({ theme: themeProp }) {
       canvas.style.height = `${height}px`;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
       createParticles();
     };
 
+    // Listen on window so overlaying text does not block tracking.
     const onMouseMove = (event) => {
+      if (!interactiveGlow || !isDark()) {
+        mouse.x = null;
+        mouse.y = null;
+        return;
+      }
+
       const rect = canvas.getBoundingClientRect();
+      const inside =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+
+      if (!inside) {
+        mouse.x = null;
+        mouse.y = null;
+        return;
+      }
+
       mouse.x = event.clientX - rect.left;
       mouse.y = event.clientY - rect.top;
     };
@@ -81,68 +94,120 @@ export default function Constellation({ theme: themeProp }) {
       mouse.y = null;
     };
 
+    const influenceAt = (x, y) => {
+      if (
+        !interactiveGlow ||
+        !isDark() ||
+        mouse.x === null ||
+        mouse.y === null
+      ) {
+        return 0;
+      }
+
+      const distance = Math.hypot(
+        x - mouse.x,
+        y - mouse.y
+      );
+
+      if (distance >= mouse.radius) return 0;
+
+      const falloff = 1 - distance / mouse.radius;
+      return falloff * falloff;
+    };
+
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const color = getParticleColor();
+      const dark = isDark();
+      const baseColor = dark
+        ? "245, 245, 240"
+        : "32, 32, 30";
+
       const connectionDistance = 115;
 
-      particles.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      // Move particles.
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
 
-        if (particle.x < 0 || particle.x > width) {
-          particle.vx *= -1;
-        }
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        if (particle.y < 0 || particle.y > height) {
-          particle.vy *= -1;
-        }
-
-        particle.x = Math.max(0, Math.min(width, particle.x));
-        particle.y = Math.max(0, Math.min(height, particle.y));
-
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = particle.x - mouse.x;
-          const dy = particle.y - mouse.y;
-          const distance = Math.hypot(dx, dy);
-
-          if (distance < mouse.radius && distance > 0) {
-            particle.x += (dx / distance) * 0.35;
-            particle.y += (dy / distance) * 0.35;
-          }
-        }
-
-        ctx.beginPath();
-        ctx.arc(
-          particle.x,
-          particle.y,
-          particle.radius,
-          0,
-          Math.PI * 2
-        );
-        ctx.fillStyle = `rgba(${color}, 0.55)`;
-        ctx.fill();
+        p.x = Math.max(0, Math.min(width, p.x));
+        p.y = Math.max(0, Math.min(height, p.y));
       });
 
+      // Draw connections.
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i];
           const b = particles[j];
-          const distance = Math.hypot(a.x - b.x, a.y - b.y);
+          const distance = Math.hypot(
+            a.x - b.x,
+            a.y - b.y
+          );
 
-          if (distance < connectionDistance) {
-            const opacity = (1 - distance / connectionDistance) * 0.24;
+          if (distance >= connectionDistance) continue;
 
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(${color}, ${opacity})`;
+          const baseOpacity =
+            (1 - distance / connectionDistance) * 0.3;
+
+          const influence = Math.max(
+            influenceAt(a.x, a.y),
+            influenceAt(b.x, b.y),
+            influenceAt((a.x + b.x) / 2, (a.y + b.y) / 2) * 0.8
+          );
+
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+
+          if (dark && influence > 0) {
+            // Strong, visible lime replaces white locally.
+            ctx.strokeStyle = `rgba(214, 243, 106, ${
+              Math.min(1, 0.25 + influence * 0.95)
+            })`;
+            ctx.lineWidth = 0.8 + influence * 1.1;
+            ctx.shadowColor = "#d6f36a";
+            ctx.shadowBlur = influence * 12;
+          } else {
+            ctx.strokeStyle = `rgba(${baseColor}, ${baseOpacity})`;
             ctx.lineWidth = 0.7;
-            ctx.stroke();
+            ctx.shadowBlur = 0;
           }
+
+          ctx.stroke();
+          ctx.shadowBlur = 0;
         }
       }
+
+      // Draw stars, with a brighter local glow.
+      particles.forEach((p) => {
+        const influence = influenceAt(p.x, p.y);
+
+        ctx.beginPath();
+        ctx.arc(
+          p.x,
+          p.y,
+          p.radius + influence * 1.2,
+          0,
+          Math.PI * 2
+        );
+
+        if (dark && influence > 0) {
+          ctx.fillStyle = `rgba(214, 243, 106, ${
+            0.7 + influence * 0.3
+          })`;
+          ctx.shadowColor = "#d6f36a";
+          ctx.shadowBlur = 8 + influence * 18;
+        } else {
+          ctx.fillStyle = `rgba(${baseColor}, 0.75)`;
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
 
       animationFrame = requestAnimationFrame(draw);
     };
@@ -150,8 +215,8 @@ export default function Constellation({ theme: themeProp }) {
     const observer = new ResizeObserver(resizeCanvas);
     observer.observe(container);
 
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("blur", onMouseLeave);
 
     resizeCanvas();
     draw();
@@ -159,14 +224,21 @@ export default function Constellation({ theme: themeProp }) {
     return () => {
       cancelAnimationFrame(animationFrame);
       observer.disconnect();
-      canvas.removeEventListener("mousemove", onMouseMove);
-      canvas.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("blur", onMouseLeave);
     };
-  }, []);
+  }, [themeProp, interactiveGlow]);
 
   return (
-    <div className="constellation-layer" ref={containerRef} aria-hidden="true">
-      <canvas ref={canvasRef} className="constellation-canvas" />
+    <div
+      className="constellation-layer"
+      ref={containerRef}
+      aria-hidden="true"
+    >
+      <canvas
+        ref={canvasRef}
+        className="constellation-canvas"
+      />
     </div>
   );
 }
