@@ -40,12 +40,12 @@ export default function Navbar({ theme, onToggleTheme }) {
       }
     };
 
-    // Wait for the page sections to render.
     animationFrame = requestAnimationFrame(updateActiveSection);
 
     window.addEventListener("scroll", updateActiveSection, {
       passive: true,
     });
+
     window.addEventListener("resize", updateActiveSection);
 
     return () => {
@@ -59,7 +59,7 @@ export default function Navbar({ theme, onToggleTheme }) {
     activeSection === section ? "nav-active" : "";
 
   const scrollToSection = (event, sectionId) => {
-    // Let React Router navigate normally from other pages.
+    // Allow normal React Router navigation from other pages.
     if (location.pathname !== "/") return;
 
     event.preventDefault();
@@ -81,11 +81,32 @@ export default function Navbar({ theme, onToggleTheme }) {
     setActiveSection(sectionId);
   };
 
+  const handleHomeClick = (event) => {
+    // If already on the homepage, scroll to the top.
+    if (location.pathname === "/") {
+      event.preventDefault();
+
+      window.history.replaceState(null, "", "/");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      setActiveSection("home");
+    }
+    // Otherwise, React Router navigates to "/" normally.
+  };
+
   return (
     <header className="site-header">
       <nav className="nav-shell" aria-label="Main navigation">
         {/* Brand */}
-        <Link className="wordmark" to="/">
+        <Link
+          className="wordmark"
+          to="/"
+          onClick={handleHomeClick}
+        >
           KK's Canvas<span>®</span>
         </Link>
 
@@ -96,11 +117,18 @@ export default function Navbar({ theme, onToggleTheme }) {
 
         {/* Navigation links */}
         <div className="nav-links">
-          <Link to="/" className={navClass("home")}>
+          <Link
+            to="/"
+            className={navClass("home")}
+            onClick={handleHomeClick}
+          >
             Home
           </Link>
 
-          <Link to="/work" className={navClass("work")}>
+          <Link
+            to="/work"
+            className={navClass("work")}
+          >
             Work
           </Link>
 

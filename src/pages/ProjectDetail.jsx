@@ -1,6 +1,6 @@
 
 import { Link, useParams } from "react-router-dom";
-
+import BrandGuidelineViewer from "../components/BrandGuidelineViewer";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
@@ -48,6 +48,11 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
     .filter((item) => String(item.id) !== String(project.id))
     .slice(0, 2);
 
+  // Identify the project that should display the brand guideline PDF.
+  // Change this condition if your project uses a different ID.
+  const isBrandGuidelineProject =
+  project.type === "brand-guideline";
+
   return (
     <div className={`app-shell theme-${theme}`}>
       <Navbar
@@ -92,46 +97,61 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
           </div>
         </section>
 
-        <section className="project-detail-visual">
-          {project.image?.trim() ? (
-            <img
-              src={project.image}
-              alt={project.title}
-              className="project-detail-image"
-            />
-          ) : (
-            <div
-              className={`project-detail-placeholder placeholder-${
-                project.placeholder || "default"
-              }`}
-            >
-              <span>PROJECT / {project.id}</span>
-              <h2>{project.title}</h2>
-              <p>
-                {project.category} · {project.style}
-              </p>
-            </div>
-          )}
-        </section>
+        {/* PROJECT VISUAL / BRAND GUIDELINE PDF */}
+        
+<section className="project-detail-visual">
+  {project.pdfUrl ? (
+    <BrandGuidelineViewer
+      pdfUrl={project.pdfUrl}
+      title={project.viewerTitle || project.title}
+      eyebrow={project.viewerEyebrow || "PROJECT DOCUMENT"}
+      description={
+        project.viewerDescription || project.description
+      }
+      documentLabel={`${project.style.toUpperCase()} / EDITORIAL DESIGN`}
+    />
+  ) : project.image?.trim() ? (
+    <img
+      src={project.image}
+      alt={project.title}
+      className="project-detail-image"
+    />
+  ) : (
+    <div
+      className={`project-detail-placeholder placeholder-${
+        project.placeholder || "default"
+      }`}
+    >
+      <span>PROJECT / {project.id}</span>
+      <h2>{project.title}</h2>
+      <p>
+        {project.category} · {project.style}
+      </p>
+    </div>
+  )}
+</section>
 
-        <section className="project-story">
-          <div>
-            <span className="section-kicker">THE PROJECT</span>
-            <h2>About the work.</h2>
-          </div>
+        
+{project.story && (
+  <section className="project-story">
+    <div>
+      <span className="section-kicker">
+        {project.story.label || "THE PROJECT"}
+      </span>
 
-          <div>
-            <p>
-              {project.longDescription ||
-                `An exploration of ${project.category.toLowerCase()} through a ${project.style.toLowerCase()} visual direction. This project is a placeholder for the concept, creative process, and design decisions behind the final work.`}
-            </p>
+      <h2>
+        {project.story.heading || "About the work."}
+      </h2>
+    </div>
 
-            <p>
-              The full case study, design explorations, and final
-              deliverables will be added here as the portfolio develops.
-            </p>
-          </div>
-        </section>
+    <div>
+      {project.story.paragraphs?.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
+  </section>
+)}
+
 
         <section className="project-navigation">
           {previousProject ? (
@@ -179,7 +199,7 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
         </section>
       </main>
 
-<ContactCTA />
+      <ContactCTA />
 
       <Footer />
     </div>

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
@@ -9,23 +8,33 @@ import Constellation from "../components/Constellation";
 
 export default function Home({ theme, onToggleTheme }) {
   const [activeCategory, setActiveCategory] = useState("All Work");
+  const [aboutIsActive, setAboutIsActive] = useState(false);
 
-  const toggleTheme = () => {
-    const changeTheme = () => {
-      setTheme((current) =>
-        current === "light" ? "dark" : "light"
-      );
-    };
+  // Activate the portrait while the About section is visible
+  useEffect(() => {
+    const aboutSection = document.getElementById("about");
 
-    if (
-      document.startViewTransition &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      document.startViewTransition(changeTheme);
-    } else {
-      changeTheme();
-    }
-  };
+    if (!aboutSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+  if (entry.isIntersecting) {
+    setTimeout(() => {
+      setAboutIsActive(true);
+    }, 350);
+  } else {
+    setAboutIsActive(false);
+  }
+},
+{
+  threshold: 0.4,
+}
+    );
+
+    observer.observe(aboutSection);
+
+    return () => observer.disconnect();
+  }, []);
 
   const visibleProjects = projects.filter((project) => {
     const matchesCategory =
@@ -61,7 +70,7 @@ export default function Home({ theme, onToggleTheme }) {
               differently.
             </p>
 
-            <a className="text-link" href="#work">
+            <a className="text-link" href="#selected-work">
               Explore selected work <span>↓</span>
             </a>
           </div>
@@ -73,7 +82,10 @@ export default function Home({ theme, onToggleTheme }) {
         </section>
 
         {/* SELECTED WORK */}
-        <section id="selected-work" className="selected-work-section page-shell">
+        <section
+          id="selected-work"
+          className="selected-work-section page-shell"
+        >
           <div className="section-heading">
             <div>
               <span className="section-kicker">
@@ -110,82 +122,94 @@ export default function Home({ theme, onToggleTheme }) {
           </div>
 
           {/* PROJECT GALLERY */}
-          <div className="project-grid">
-            {visibleProjects.length > 0 ? (
-              visibleProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                />
-              ))
-            ) : (
-              <p className="empty-state">
-                No featured projects in this category yet.
-                More work is on its way.
-              </p>
-            )}
-          </div>
-        </section>
-
-        
-{/* ABOUT */}
-<section id="about" className="about-section">
-   <Constellation />
-  <div className="page-shell about-inner">
-    <span className="section-kicker">
-      02 / A LITTLE ABOUT ME
-    </span>
-
-    <div className="about-layout">
-      <div className="about-content">
-        <h2>
-          Curious by nature.
-          <br />
-          <span className="hero-highlight-word">Intentional</span> {" "} by design.
-        </h2>
-
-        <div className="about-bottom">
-          <p>
-            I'm an independent graphic designer interested in
-            building visual identities, digital experiences,
-            and tangible things. My approach moves between
-            minimalism, experimentation, and whatever best
-            serves the idea.
-          </p>
-
-          <a href="#contact" className="text-link">
-            Let's connect <span>↗</span>
-          </a>
-        </div>
-      </div>
-
-      
-
-<div className="about-portrait">
-  <img
-    src="/images/profile.png"
-    alt="Portrait of Kanishk Kukreja"
-    loading="lazy"
-  />
-
-  <div className="portrait-name-overlay">
-    <span className="portrait-name-label" >THE DESIGNER</span>
-    <h3>
-      KANISHK<br></br>
-      KUKREJA
-    </h3>
-
-  </div>
+          
+<div className="project-grid reference-project-grid">
+  {visibleProjects.length > 0 ? (
+    visibleProjects.map((project, index) => (
+      <ProjectCard
+        key={project.id}
+        project={project}
+        index={index}
+      />
+    ))
+  ) : (
+    <p className="empty-state">
+      No featured projects in this category yet.
+      More work is on its way.
+    </p>
+  )}
 </div>
 
-    </div>
-  </div>
-</section>
+        </section>
 
+        {/* ABOUT */}
+        <section id="about" className="about-section">
+          <Constellation />
 
+          <div className="page-shell about-inner">
+            <span className="section-kicker">
+              02 / A LITTLE ABOUT ME
+            </span>
+
+            <div className="about-layout">
+              <div className="about-content">
+                <h2>
+                  Curious by nature.
+                  <br />
+                  <span className="hero-highlight-word">
+                    Intentional
+                  </span>{" "}
+                  by design.
+                </h2>
+
+                <div className="about-bottom">
+                  <p>
+                    I'm an independent graphic designer interested in
+                    building visual identities, digital experiences,
+                    and tangible things. My approach moves between
+                    minimalism, experimentation, and whatever best
+                    serves the idea.
+                  </p>
+
+                  <a href="#contact" className="text-link">
+                    Let's connect <span>↗</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* PORTRAIT */}
+              <div
+                className={`about-portrait ${
+                  aboutIsActive ? "portrait-active" : ""
+                }`}
+              >
+                <img
+                  src="/images/profile.png"
+                  alt="Portrait of Kanishk Kukreja"
+                  loading="lazy"
+                />
+
+                <div className="portrait-name-overlay">
+                  <span className="portrait-name-label">
+                    THE DESIGNER
+                  </span>
+
+                  <h3>
+                    KANISHK
+                    <br />
+                    KUKREJA
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-      <ContactCTA />
+
+      <div id="contact">
+        <ContactCTA />
+      </div>
+
       <Footer />
     </div>
   );
