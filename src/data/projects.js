@@ -8,7 +8,7 @@ export const projects = [
   style: "Minimal",
   year: "2026",
   description: "Visual identity & brand system",
-  image: "public/images/branding/study-in-identity.jpg",
+  image: "/images/branding/study-in-identity.jpg",
   pdfUrl: "/documents/brand-guidelines.pdf",
   viewerTitle: "The NJA Case Study",
   viewerEyebrow: "THE BRAND BOOK",
@@ -38,7 +38,7 @@ export const projects = [
     "College newsletter design exploring bold Bauhaus geometry, typography, and color.",
   longDescription:
     "A college newsletter design inspired by the Bauhaus movement. The visual direction combines geometric compositions, expressive typography, and a bold palette of red, mustard yellow, and warm beige to create an engaging editorial experience.",
-  image: "public/images/print/delve-cover.jpg",
+  image: "/images/print/delve-cover.jpg",
   pdfUrl: "/documents/college-newsletter.pdf",
   viewerTitle: "Delve",
   viewerEyebrow: "COLLEGE NEWSLETTER",
