@@ -1,5 +1,7 @@
 
 import { Link, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+
 import BrandGuidelineViewer from "../components/BrandGuidelineViewer";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -52,28 +54,32 @@ const njaSections = [
 
 const stationeryItems = [
   {
-    title: "Letterhead",
-    image: "/images/branding/nja-letterhead.jpg",
+    title: "Desk Flag",
+    image: "/images/branding/nja-desk-flag.png",
   },
   {
-    title: "Business card",
-    image: "/images/branding/nja-business-card.jpg",
+    title: "Paper Bag",
+    image: "/images/branding/nja-gift-bag.png",
+  },
+  {
+    title: "Pen",
+    image: "/images/branding/nja-pen.png",
+  },
+  {
+    title: "Business Cards",
+    image: "/images/branding/nja-business-cards.png",
+  },
+  {
+    title: "Presentation Folder",
+    image: "/images/branding/nja-presentation-folder.png",
+  },
+  {
+    title: "Signage",
+    image: "/images/branding/nja-signage.png",
   },
   {
     title: "Envelope",
-    image: "/images/branding/nja-envelope.jpg",
-  },
-  {
-    title: "Document folder",
-    image: "/images/branding/nja-document-folder.jpg",
-  },
-  {
-    title: "Notebook",
-    image: "/images/branding/nja-notebook.jpg",
-  },
-  {
-    title: "Notepad",
-    image: "/images/branding/nja-notepad.jpg",
+    image: "/images/branding/nja-envelope.png",
   },
 ];
 
@@ -111,7 +117,73 @@ function NjaCaseStudyImage({ section }) {
   );
 }
 
+/* Enlarged stationery image overlay */
+function StationeryLightbox({ item, onClose }) {
+  useEffect(() => {
+    if (!item) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [item, onClose]);
+
+  if (!item) return null;
+
+  return (
+    <div
+      className="nja-lightbox"
+      onClick={onClose}
+      role="presentation"
+    >
+      <button
+        type="button"
+        className="nja-lightbox-close"
+        onClick={onClose}
+        aria-label="Close enlarged image"
+      >
+        ×
+      </button>
+
+      <div
+        className="nja-lightbox-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label={item.title}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <img src={item.image} alt={item.title} />
+        <p>{item.title}</p>
+      </div>
+    </div>
+  );
+}
+
 function NjaCaseStudy() {
+  const [selectedStationery, setSelectedStationery] = useState(null);
+
+  const closeLightbox = useCallback(() => {
+    setSelectedStationery(null);
+  }, []);
+
+  const handleStationeryKeyDown = (event, item) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedStationery(item);
+    }
+  };
+
   return (
     <div className="nja-case-study">
       {njaSections.map((section) => (
@@ -148,6 +220,7 @@ function NjaCaseStudy() {
           <p>
             A closer look at the stationery and print materials
             created for NJA. Hover over an item to explore it.
+            Click an item to view it in detail.
           </p>
         </div>
 
@@ -157,7 +230,12 @@ function NjaCaseStudy() {
               className={`nja-stationery-item nja-stationery-item-${index + 1}`}
               key={item.title}
               tabIndex={0}
-              aria-label={`View ${item.title}`}
+              role="button"
+              aria-label={`Enlarge ${item.title}`}
+              onClick={() => setSelectedStationery(item)}
+              onKeyDown={(event) =>
+                handleStationeryKeyDown(event, item)
+              }
             >
               <img
                 src={item.image}
@@ -175,6 +253,11 @@ function NjaCaseStudy() {
         <p className="nja-collage-caption">
           STATIONERY COLLECTION / HOVER TO EXPLORE
         </p>
+
+        <StationeryLightbox
+          item={selectedStationery}
+          onClose={closeLightbox}
+        />
       </section>
     </div>
   );
@@ -223,7 +306,7 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
     .filter((item) => String(item.id) !== String(project.id))
     .slice(0, 2);
 
-  // Show the additional case study sections only for NJA.
+  // Show additional case study sections only for NJA.
   const isNjaProject = String(project.id) === "01";
 
   return (
@@ -271,7 +354,6 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
         </section>
 
         {/* Existing project visual and PDF viewer */}
-
         <section className="project-detail-visual">
           {project.pdfUrl ? (
             <BrandGuidelineViewer
@@ -307,7 +389,6 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
         </section>
 
         {/* Existing project story */}
-
         {project.story && (
           <section className="project-story">
             <div>
@@ -329,11 +410,9 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
         )}
 
         {/* NJA case study sections */}
-
         {isNjaProject && <NjaCaseStudy />}
 
         {/* Previous and next projects */}
-
         <section className="project-navigation">
           {previousProject ? (
             <Link to={`/work/${previousProject.id}`}>
@@ -361,7 +440,6 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
         </section>
 
         {/* Related projects */}
-
         <section className="related-projects">
           <span className="section-kicker">KEEP EXPLORING</span>
 
