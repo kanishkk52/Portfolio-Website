@@ -5453,3 +5453,125 @@ a:focus-visible {
 .brand-pdf-viewer:fullscreen .brand-pdf-canvas {
   height: calc(100% - 100px);
 }
+
+/* =========================================
+   MOBILE SPACING REFINEMENT
+========================================= */
+
+@media (max-width: 760px) {
+  /* Give the page comfortable side margins */
+  .project-detail.page-shell {
+    padding-left: 22px;
+    padding-right: 22px;
+    box-sizing: border-box;
+  }
+
+  /* More space between case study sections */
+  .nja-case-study {
+    margin-top: 64px;
+  }
+
+  .nja-work-section {
+    margin-bottom: 88px;
+  }
+
+  /* Headings and descriptions */
+  .nja-work-heading {
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .nja-work-heading h2 {
+    margin-top: 14px;
+    font-size: clamp(32px, 7.8vw, 42px);
+    line-height: 1.14;
+    letter-spacing: -0.045em;
+  }
+
+  .nja-work-heading > p {
+    font-size: 14px;
+    line-height: 1.85;
+    max-width: 36rem;
+  }
+
+  /* Keep images away from the screen edges */
+  .nja-feature-image,
+  .nja-image-website,
+  .nja-image-linkedin,
+  .nja-image-signature {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .nja-image-website {
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+
+  .nja-image-linkedin {
+    aspect-ratio: 1128 / 191;
+    object-fit: contain;
+  }
+
+  /* Newsletter preview */
+  .nja-newsletter-frame {
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .nja-newsletter-scroll {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .nja-scroll-hint {
+    margin-top: 14px;
+  }
+
+  /* Stationery section gets a little more space */
+  .nja-work-stationery {
+    margin-top: 10px;
+  }
+
+  .nja-stationery-collage {
+    margin-top: 8px;
+  }
+
+  .nja-collage-caption {
+    margin-top: 18px;
+    font-size: 9px;
+    line-height: 1.8;
+  }
+}
+
+/* Narrower phones */
+@media (max-width: 480px) {
+  .project-detail.page-shell {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .nja-case-study {
+    margin-top: 54px;
+  }
+
+  .nja-work-section {
+    margin-bottom: 76px;
+  }
+
+  .nja-work-heading {
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .nja-work-heading h2 {
+    font-size: clamp(30px, 8vw, 37px);
+    line-height: 1.16;
+  }
+
+  .nja-work-heading > p {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+}
