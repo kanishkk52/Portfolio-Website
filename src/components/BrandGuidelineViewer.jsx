@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
   ChevronLeft,
@@ -27,75 +27,71 @@ export default function BrandGuidelineViewer({
   description = "Explore the complete visual identity system.",
   documentLabel = "VISUAL IDENTITY SYSTEM",
 }) {
-
   const viewerRef = useRef(null);
   const canvasRef = useRef(null);
 
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoom, setZoom] = useState(1);
-  const [fitMode, setFitMode] = useState("page");
   const [error, setError] = useState(false);
-
-  const [availableSize, setAvailableSize] = useState({
-    width: 900,
-    height: 600,
-  });
-
+  const [availableWidth, setAvailableWidth] = useState(800);
   const [pageDimensions, setPageDimensions] = useState(null);
 
-  // Measure the actual available viewer area.
+  // Measure the actual width available for the PDF.
   useEffect(() => {
     const element = canvasRef.current;
     if (!element) return;
 
-    const observer = new ResizeObserver(([entry]) => {
-      setAvailableSize({
-        width: Math.max(1, entry.contentRect.width - 32),
-        height: Math.max(1, entry.contentRect.height - 32),
-      });
-    });
+    const updateWidth = () => {
+      const width = element.getBoundingClientRect().width;
+      if (width > 0) {
+        setAvailableWidth(Math.max(1, width - 24));
+      }
+    };
 
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
     observer.observe(element);
 
-    return () => observer.disconnect();
+    window.addEventListener("resize", updateWidth);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateWidth);
+    };
   }, []);
 
-  // Calculate the scale needed to fit the whole page.
+  // Fit the page to the viewer width, including on mobile.
   const baseScale = pageDimensions
-  ? pageDimensions.width > availableSize.width
-    ? availableSize.width / pageDimensions.width
-    : 1
-  : 1;
+    ? Math.min(1, availableWidth / pageDimensions.width)
+    : 1;
 
-const actualScale = baseScale * zoom;
+  const actualScale = baseScale * zoom;
 
-const pageWidth = pageDimensions
-  ? Math.floor(pageDimensions.width * actualScale)
-  : undefined;
+  const pageWidth = pageDimensions
+    ? Math.max(1, Math.floor(pageDimensions.width * actualScale))
+    : undefined;
 
-  const previousPage = () => {
+  const previousPage = useCallback(() => {
     setPageNumber((page) => Math.max(1, page - 1));
-  };
+  }, []);
 
-  const nextPage = () => {
+  const nextPage = useCallback(() => {
     setPageNumber((page) => Math.min(numPages, page + 1));
-  };
+  }, [numPages]);
 
-  const zoomIn = () => {
-    setFitMode("page");
+  const zoomIn = useCallback(() => {
     setZoom((value) => Math.min(2.5, +(value + 0.15).toFixed(2)));
-  };
+  }, []);
 
-  const zoomOut = () => {
-    setFitMode("page");
+  const zoomOut = useCallback(() => {
     setZoom((value) => Math.max(0.5, +(value - 0.15).toFixed(2)));
-  };
+  }, []);
 
-  const fitPage = () => {
+  const fitPage = useCallback(() => {
     setZoom(1);
-    setFitMode("page");
-  };
+  }, []);
 
   const openFullscreen = async () => {
     const viewer = viewerRef.current;
@@ -112,29 +108,48 @@ const pageWidth = pageDimensions
     }
   };
 
+  const handleDocumentLoad = async (pdf) => {
+    try {
+      const firstPage = await pdf.getPage(1);
+      const viewport = firstPage.getViewport({ scale: 1 });
+
+      setNumPages(pdf.numPages);
+      setPageNumber(1);
+      setPageDimensions({
+        width: viewport.width,
+        height: viewport.height,
+      });
+      setZoom(1);
+      setError(false);
+    } catch (err) {
+      console.error("Unable to read PDF dimensions:", err);
+      setError(true);
+    }
+  };
+
   return (
     <section className="brand-pdf-section">
       {/* Heading */}
       <div className="brand-pdf-heading">
-  <div className="brand-pdf-heading-copy">
-    <span className="brand-pdf-eyebrow">{eyebrow}</span>
+        <div className="brand-pdf-heading-copy">
+          <span className="brand-pdf-eyebrow">{eyebrow}</span>
 
-    <h2>
-      {title}<span>.</span>
-    </h2>
+          <h2>
+            {title}<span>.</span>
+          </h2>
 
-    <p>{description}</p>
-  </div>
+          <p>{description}</p>
+        </div>
 
-  <a
-    className="brand-pdf-open"
-    href={pdfUrl}
-    target="_blank"
-    rel="noreferrer"
-  >
-    Open PDF <ExternalLink size={15} />
-  </a>
-</div>
+        <a
+          className="brand-pdf-open"
+          href={pdfUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open PDF <ExternalLink size={15} />
+        </a>
+      </div>
 
       {/* PDF Viewer */}
       <div
@@ -174,8 +189,8 @@ const pageWidth = pageDimensions
             <button
               type="button"
               onClick={fitPage}
-              aria-label="Fit page"
-              title="Fit entire page"
+              aria-label="Fit page to width"
+              title="Fit page to width"
             >
               <Scan size={16} />
             </button>
@@ -209,7 +224,7 @@ const pageWidth = pageDimensions
             </button>
           </div>
 
-          <div className="brand-pdf-tools">
+          <div className="brand-pdf-tools brand-pdf-tools-end">
             <button
               type="button"
               onClick={openFullscreen}
@@ -232,7 +247,7 @@ const pageWidth = pageDimensions
 
         {/* Document information */}
         <div className="brand-pdf-topbar">
-          <span>VISUAL IDENTITY SYSTEM</span>
+          <span>{documentLabel}</span>
 
           <span>
             PAGE {String(pageNumber).padStart(2, "0")}
@@ -242,7 +257,7 @@ const pageWidth = pageDimensions
           </span>
         </div>
 
-        {/* PDF Page */}
+        {/* PDF page */}
         <div className="brand-pdf-canvas" ref={canvasRef}>
           {error ? (
             <p className="brand-pdf-error">
@@ -251,24 +266,11 @@ const pageWidth = pageDimensions
           ) : (
             <Document
               file={pdfUrl}
-              onLoadSuccess={async (pdf) => {
-                try {
-                  const firstPage = await pdf.getPage(1);
-                  const viewport = firstPage.getViewport({ scale: 1 });
-
-                  setNumPages(pdf.numPages);
-                  setPageNumber(1);
-                  setPageDimensions({
-                    width: viewport.width,
-                    height: viewport.height,
-                  });
-                  setZoom(1);
-                  setError(false);
-                } catch {
-                  setError(true);
-                }
+              onLoadSuccess={handleDocumentLoad}
+              onLoadError={(err) => {
+                console.error("Unable to load PDF:", err);
+                setError(true);
               }}
-              onLoadError={() => setError(true)}
               loading={
                 <p className="brand-pdf-status">
                   Loading brand guidelines...
@@ -282,7 +284,7 @@ const pageWidth = pageDimensions
             >
               {pageDimensions && (
                 <Page
-                  key={pageNumber}
+                  key={`${pageNumber}-${pageWidth}`}
                   pageNumber={pageNumber}
                   width={pageWidth}
                   renderTextLayer

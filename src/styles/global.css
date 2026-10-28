@@ -5055,3 +5055,401 @@ a:focus-visible {
   text-align: left;
   appearance: none;
 }
+
+/* =========================================
+   MOBILE FIXES: NJA CASE STUDY + PDF VIEWER
+========================================= */
+
+@media (max-width: 760px) {
+  /* Prevent horizontal overflow across the project page */
+  .project-detail,
+  .nja-case-study,
+  .nja-work-section,
+  .project-detail-visual,
+  .project-story {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .project-detail {
+    overflow-wrap: break-word;
+  }
+
+  /* Stack each section heading and description */
+  .nja-work-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .nja-work-heading > div {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .nja-work-heading h2 {
+    max-width: 100%;
+    margin-top: 12px;
+    font-size: clamp(32px, 8vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -0.055em;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .nja-work-heading > p {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    justify-self: auto;
+    font-size: 14px;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+  }
+
+  /* Keep section spacing controlled */
+  .nja-work-section {
+    margin-bottom: 72px;
+  }
+
+  .nja-case-study {
+    margin-top: 55px;
+  }
+
+  /* Keep feature images inside the phone viewport */
+  .nja-feature-image,
+  .nja-image-website,
+  .nja-image-linkedin,
+  .nja-image-signature {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .nja-image-linkedin {
+    width: 100%;
+    aspect-ratio: 1128 / 191;
+    object-fit: contain;
+  }
+
+  /* Newsletter remains square and independently scrollable */
+  .nja-newsletter-frame {
+    width: 100%;
+    max-width: 600px;
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  .nja-newsletter-scroll {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .nja-newsletter-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* PDF viewer must not expand the page horizontally */
+  .project-detail-visual {
+    overflow: hidden;
+  }
+
+  .project-detail-visual > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  /* Related project sections */
+  .project-story {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 480px) {
+  .nja-work-heading h2 {
+    font-size: clamp(30px, 8.5vw, 39px);
+  }
+
+  .nja-work-heading > p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .nja-work-section {
+    margin-bottom: 60px;
+  }
+
+  .nja-case-study {
+    margin-top: 45px;
+  }
+
+  .nja-scroll-hint {
+    font-size: 8px;
+    letter-spacing: 1.1px;
+  }
+}
+
+/* =========================================
+   BRAND GUIDELINE VIEWER: RESPONSIVE LAYOUT
+========================================= */
+
+.brand-pdf-section,
+.brand-pdf-heading,
+.brand-pdf-heading-copy,
+.brand-pdf-viewer,
+.brand-pdf-canvas {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.brand-pdf-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+.brand-pdf-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+
+.brand-pdf-heading-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.brand-pdf-heading-copy h2 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.brand-pdf-heading-copy p {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.brand-pdf-open {
+  flex: 0 0 auto;
+}
+
+.brand-pdf-viewer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.brand-pdf-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.brand-pdf-tools,
+.brand-pdf-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.brand-pdf-toolbar button,
+.brand-pdf-toolbar a {
+  flex-shrink: 0;
+}
+
+.brand-pdf-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.brand-pdf-topbar span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.brand-pdf-canvas {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 12px;
+  overflow: auto;
+}
+
+.brand-pdf-canvas .react-pdf__Document {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.brand-pdf-canvas .react-pdf__Page {
+  max-width: 100%;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+.brand-pdf-canvas .react-pdf__Page canvas {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+}
+
+.brand-pdf-canvas .react-pdf__Page canvas,
+.brand-pdf-canvas .react-pdf__Page .react-pdf__Page__textContent,
+.brand-pdf-canvas .react-pdf__Page .react-pdf__Page__annotations {
+  left: 0;
+}
+
+/* Phone layout */
+@media (max-width: 600px) {
+  .brand-pdf-heading {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  .brand-pdf-heading-copy h2 {
+    font-size: clamp(30px, 8vw, 42px);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .brand-pdf-heading-copy p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .brand-pdf-open {
+    align-self: flex-start;
+  }
+
+  .brand-pdf-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .brand-pdf-tools {
+    gap: 4px;
+  }
+
+  .brand-pdf-tools:first-child {
+    justify-content: flex-start;
+  }
+
+  .brand-pdf-pagination {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    gap: 14px;
+    padding: 5px 0;
+  }
+
+  .brand-pdf-tools-end {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+  }
+
+  .brand-pdf-toolbar button,
+  .brand-pdf-toolbar a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .brand-pdf-toolbar span {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .brand-pdf-topbar {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .brand-pdf-canvas {
+    padding: 10px 6px;
+    overflow-x: hidden;
+  }
+
+  .brand-pdf-canvas .react-pdf__Document,
+  .brand-pdf-canvas .react-pdf__Page {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .brand-pdf-canvas .react-pdf__Page canvas {
+    max-width: 100%;
+  }
+
+  .brand-pdf-canvas .react-pdf__Page .react-pdf__Page__textContent,
+  .brand-pdf-canvas .react-pdf__Page .react-pdf__Page__annotations {
+    transform-origin: top left;
+  }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+  .brand-pdf-toolbar {
+    padding: 6px 4px;
+    gap: 4px;
+  }
+
+  .brand-pdf-tools {
+    gap: 1px;
+  }
+
+  .brand-pdf-toolbar button,
+  .brand-pdf-toolbar a {
+    min-width: 28px;
+    min-height: 30px;
+  }
+
+  .brand-pdf-toolbar svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .brand-pdf-pagination {
+    gap: 8px;
+  }
+}
+
+/* Fullscreen viewer */
+.brand-pdf-viewer:fullscreen {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  background: #151515;
+  overflow: auto;
+}
+
+.brand-pdf-viewer:fullscreen .brand-pdf-canvas {
+  height: calc(100% - 100px);
+}
