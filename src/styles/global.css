@@ -4568,3 +4568,282 @@ a:focus-visible {
   position: relative;
   z-index: 1;
 }
+
+/* NJA case study */
+
+.nja-case-study {
+  --nja-border: rgba(128, 128, 128, 0.22);
+  margin-top: 90px;
+}
+
+.nja-work-section {
+  min-width: 0;
+  margin-bottom: 110px;
+}
+
+.nja-work-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 28px;
+}
+
+.nja-work-heading h2 {
+  margin-top: 15px;
+  font-size: clamp(34px, 5vw, 66px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.04;
+}
+
+.nja-work-heading > p {
+  max-width: 420px;
+  justify-self: end;
+  color: var(--text-secondary, #a5a59f);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* Main image sections */
+
+.nja-feature-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--nja-border);
+}
+
+.nja-image-website {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #e5e3dc;
+}
+
+/* LinkedIn banner: exact 1128:191 ratio */
+
+.nja-image-linkedin {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1120 / 191;
+  object-fit: contain;
+  background: #e5e3dc;
+}
+
+/* Email signature */
+
+.nja-image-signature {
+  width: 100%;
+  aspect-ratio: 596 / 200;
+  object-fit: contain;
+  object-position: left center;
+  background: #eeede7;
+}
+
+/* Newsletter: square viewport with independent vertical scrolling */
+
+.nja-newsletter-frame {
+  width: min(100%, 600px);
+  margin-inline: auto;
+}
+
+.nja-newsletter-scroll {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  background: #eeede7;
+  border: 1px solid var(--nja-border);
+  scrollbar-width: thin;
+  scrollbar-color: #777 transparent;
+}
+
+.nja-newsletter-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+}
+
+.nja-scroll-hint {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  color: var(--text-secondary, #a5a59f);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+/* Stationery collage */
+
+.nja-stationery-collage {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(210px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.nja-stationery-item {
+  position: relative;
+  z-index: 0;
+  min-width: 0;
+  min-height: 220px;
+  overflow: hidden;
+  background: #e5e3dc;
+  border: 1px solid var(--nja-border);
+  cursor: zoom-in;
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 300ms ease;
+}
+
+.nja-stationery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.nja-stationery-label {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 28px 14px 13px;
+  color: white;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.nja-stationery-item-1 {
+  grid-column: 1 / 6;
+  grid-row: 1;
+}
+
+.nja-stationery-item-2 {
+  grid-column: 6 / 10;
+  grid-row: 1;
+}
+
+.nja-stationery-item-3 {
+  grid-column: 10 / 13;
+  grid-row: 1;
+}
+
+.nja-stationery-item-4 {
+  grid-column: 1 / 5;
+  grid-row: 2;
+}
+
+.nja-stationery-item-5 {
+  grid-column: 5 / 9;
+  grid-row: 2;
+}
+
+.nja-stationery-item-6 {
+  grid-column: 9 / 13;
+  grid-row: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nja-stationery-item:hover {
+    z-index: 5;
+    transform: scale(1.045);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  .nja-stationery-item:hover .nja-stationery-label {
+    opacity: 1;
+  }
+}
+
+.nja-stationery-item:focus-visible {
+  outline: 2px solid #d6f36a;
+  outline-offset: 3px;
+}
+
+.nja-collage-caption {
+  margin-top: 18px;
+  color: var(--text-secondary, #a5a59f);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+/* Light theme */
+
+.theme-light .nja-work-heading > p,
+.theme-light .nja-collage-caption,
+.theme-light .nja-scroll-hint {
+  color: #686861;
+}
+
+/* Responsive layout */
+
+@media (max-width: 760px) {
+  .nja-case-study {
+    margin-top: 65px;
+  }
+
+  .nja-work-section {
+    margin-bottom: 75px;
+  }
+
+  .nja-work-heading {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .nja-work-heading > p {
+    justify-self: start;
+  }
+
+  .nja-newsletter-frame {
+    width: min(100%, 600px);
+  }
+
+  .nja-stationery-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 10px;
+  }
+
+  .nja-stationery-item {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 180px;
+  }
+
+  .nja-stationery-label {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 420px) {
+  .nja-stationery-item {
+    min-height: 150px;
+  }
+
+  .nja-stationery-label {
+    padding: 24px 8px 10px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nja-stationery-item,
+  .nja-stationery-item img,
+  .nja-stationery-label {
+    transition: none;
+  }
+}
