@@ -6073,3 +6073,47 @@ a:focus-visible {
     max-width: none;
   }
 }
+
+/* Keep wheel labels fixed in their original positions */
+.event-print-wheel-artwork .event-print-enlarge-hint,
+.event-print-wheel-artwork .event-print-hover-hint {
+  position: absolute;
+  bottom: 14px;
+  z-index: 5;
+  opacity: 1;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  pointer-events: none;
+}
+
+/* Left label */
+.event-print-wheel-artwork .event-print-enlarge-hint {
+  left: 14px;
+  right: auto;
+}
+
+/* Right label */
+.event-print-wheel-artwork .event-print-hover-hint {
+  left: auto;
+  right: 14px;
+}
+
+/* Only the wheel should rotate */
+.event-print-wheel-artwork:hover .event-print-wheel-image {
+  transform: rotate(360deg);
+}
+
+/* Mobile: show only the enlargement instruction */
+@media (max-width: 760px) {
+  .event-print-wheel-artwork .event-print-enlarge-hint {
+    left: 50%;
+    right: auto;
+    bottom: 12px;
+    transform: translateX(-50%) !important;
+  }
+
+  .event-print-wheel-artwork .event-print-hover-hint {
+    display: none;
+  }
+}
