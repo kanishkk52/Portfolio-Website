@@ -1,10 +1,12 @@
 
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer className="site-footer page-shell">
-      <a href="#" className="wordmark">
+      <Link to="/" className="wordmark">
         KK's Canvas<span>®</span>
-      </a>
+      </Link>
 
       <p>Independent design. Different perspectives.</p>
 
@@ -16,6 +18,7 @@ export default function Footer() {
         >
           Instagram ↗
         </a>
+
         <a
           href="https://www.behance.net/"
           target="_blank"
@@ -23,6 +26,9 @@ export default function Footer() {
         >
           Behance ↗
         </a>
+
+        <Link to="/contact">Contact ↗</Link>
+
         <span>© {new Date().getFullYear()}</span>
       </div>
     </footer>

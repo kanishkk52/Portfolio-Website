@@ -8,11 +8,13 @@ import {
 
 import SplashScreen from "./components/SplashScreen";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollProgress from "./components/ScrollProgress";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Work from "./pages/Work";
 import ProjectDetail from "./pages/ProjectDetail";
+import Contact from "./pages/Contact";
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -40,14 +42,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Splash appears on each full page load, not route changes */}
       <SplashScreen theme={theme} />
 
-      {/* Scroll to top when navigating between routes */}
       <ScrollToTop />
 
+      {/* Fixed scroll indicator across all routes */}
+      <ScrollProgress />
+
       <Routes>
-        {/* Home */}
         <Route
           path="/"
           element={
@@ -58,7 +60,6 @@ function App() {
           }
         />
 
-        {/* About Me */}
         <Route
           path="/about"
           element={
@@ -69,7 +70,6 @@ function App() {
           }
         />
 
-        {/* All Work */}
         <Route
           path="/work"
           element={
@@ -80,11 +80,20 @@ function App() {
           }
         />
 
-        {/* Individual Project Details */}
         <Route
           path="/work/:projectId"
           element={
             <ProjectDetail
+              theme={theme}
+              onToggleTheme={toggleTheme}
+            />
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={
+            <Contact
               theme={theme}
               onToggleTheme={toggleTheme}
             />

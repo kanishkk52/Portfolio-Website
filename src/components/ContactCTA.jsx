@@ -22,7 +22,7 @@ export default function ContactCTA() {
           </p>
         </div>
 
-        <Link to="/#contact" className="home-work-cta-button">
+        <Link to="/contact" className="home-work-cta-button">
           <span>LET'S CONNECT</span>
           <span className="home-work-cta-arrow" aria-hidden="true">
             ↗
