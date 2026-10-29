@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function ProjectCard({ project, index = 0 }) {
@@ -6,7 +7,10 @@ export default function ProjectCard({ project, index = 0 }) {
     typeof project.image === "string" &&
     project.image.trim().length > 0;
 
+  const [imageFailed, setImageFailed] = useState(false);
   const placeholder = project.placeholder || "default";
+
+  const showImage = hasImage && !imageFailed;
 
   return (
     <article
@@ -18,13 +22,14 @@ export default function ProjectCard({ project, index = 0 }) {
         aria-label={`View project: ${project.title}`}
       >
         <div className={`project-art placeholder-${placeholder}`}>
-          {hasImage ? (
+          {showImage ? (
             <img
               className="project-image"
               src={project.image}
-              alt={`${project.title} — ${project.category}`}
+              alt={`${project.title} - ${project.category}`}
               loading="lazy"
               decoding="async"
+              onError={() => setImageFailed(true)}
               style={{
                 objectPosition: project.imagePosition || "center",
               }}
@@ -45,15 +50,21 @@ export default function ProjectCard({ project, index = 0 }) {
                   <span className="bauhaus-circle" />
                   <span className="bauhaus-square" />
                   <span className="bauhaus-triangle">▲</span>
-                  <span className="bauhaus-type">FORM<br />FOLLOWS</span>
+                  <span className="bauhaus-type">
+                    FORM<br />FOLLOWS
+                  </span>
                 </div>
               )}
 
               {placeholder === "retro" && (
                 <div className="graphic-retro">
                   <span className="retro-sun">✳</span>
-                  <span className="retro-title">GOOD<br />THINGS<br />INSIDE.</span>
-                  <span className="retro-caption">MADE WITH FEELING</span>
+                  <span className="retro-title">
+                    GOOD<br />THINGS<br />INSIDE.
+                  </span>
+                  <span className="retro-caption">
+                    MADE WITH FEELING
+                  </span>
                 </div>
               )}
 
@@ -62,15 +73,21 @@ export default function ProjectCard({ project, index = 0 }) {
                   <span className="digital-orbit digital-orbit-one" />
                   <span className="digital-orbit digital-orbit-two" />
                   <span className="digital-core">D.</span>
-                  <span className="digital-caption">DIGITAL / HUMAN</span>
+                  <span className="digital-caption">
+                    DIGITAL / HUMAN
+                  </span>
                 </div>
               )}
 
               {placeholder === "editorial" && (
                 <div className="graphic-editorial">
                   <span className="editorial-small">THE COMPANY</span>
-                  <span className="editorial-title">EDIT<span>.</span></span>
-                  <span className="editorial-bottom">A NEW POINT OF VIEW</span>
+                  <span className="editorial-title">
+                    EDIT<span>.</span>
+                  </span>
+                  <span className="editorial-bottom">
+                    A NEW POINT OF VIEW
+                  </span>
                 </div>
               )}
 
@@ -80,7 +97,9 @@ export default function ProjectCard({ project, index = 0 }) {
                     <span>KK</span>
                   </div>
                   <div className="stationery-sheet stationery-sheet-front">
-                    <span>THE DETAILS<br />MATTER.</span>
+                    <span>
+                      THE DETAILS<br />MATTER.
+                    </span>
                     <small>STUDIO / 001</small>
                   </div>
                 </div>

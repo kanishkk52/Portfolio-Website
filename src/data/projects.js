@@ -60,79 +60,118 @@ story: {
 
 },
 
-  {
-    id: "03",
-    title: "Good Things Inside",
-    category: "Packaging",
-    style: "Retro",
-    year: "2026",
-    description: "Packaging & visual language",
-    image: "",
-    featured: true,
-    layout: "wide",
-    placeholder: "retro",
-  },
-  {
-    id: "04",
-    title: "Digital Perspectives",
-    category: "UI Design",
-    style: "Contemporary",
-    year: "2026",
-    description: "Website & interface design",
-    image: "",
-    featured: true,
-    layout: "tall",
-    placeholder: "digital",
-  },
-  {
-    id: "05",
-    title: "The Company Edit",
-    category: "Presentation",
-    style: "Editorial",
-    year: "2026",
-    description: "Company profile & presentation",
-    image: "",
-    featured: true,
-    layout: "wide",
-    placeholder: "editorial",
-  },
-  {
-    id: "06",
-    title: "Objects of Everyday",
-    category: "Stationery",
-    style: "Minimal",
-    year: "2026",
-    description: "Stationery & print collateral",
-    image: "",
-    featured: true,
-    layout: "wide",
-    placeholder: "stationery",
-  },
+  // {
+  //   id: "03",
+  //   title: "Good Things Inside",
+  //   category: "Packaging",
+  //   style: "Retro",
+  //   year: "2026",
+  //   description: "Packaging & visual language",
+  //   image: "",
+  //   featured: true,
+  //   layout: "wide",
+  //   placeholder: "retro",
+  // },
+  // {
+  //   id: "04",
+  //   title: "Digital Perspectives",
+  //   category: "UI Design",
+  //   style: "Contemporary",
+  //   year: "2026",
+  //   description: "Website & interface design",
+  //   image: "",
+  //   featured: true,
+  //   layout: "tall",
+  //   placeholder: "digital",
+  // },
+  // {
+  //   id: "05",
+  //   title: "The Company Edit",
+  //   category: "Presentation",
+  //   style: "Editorial",
+  //   year: "2026",
+  //   description: "Company profile & presentation",
+  //   image: "",
+  //   featured: true,
+  //   layout: "wide",
+  //   placeholder: "editorial",
+  // },
+  // {
+  //   id: "06",
+  //   title: "Objects of Everyday",
+  //   category: "Stationery",
+  //   style: "Minimal",
+  //   year: "2026",
+  //   description: "Stationery & print collateral",
+  //   image: "",
+  //   featured: true,
+  //   layout: "wide",
+  //   placeholder: "stationery",
+  // },
   
+
+
 {
-  id: "07",
-  title: "LinkedIn Banner — One",
-  category: "Other",
-  style: "Editorial",
+  id: "09",
+  title: "Beyond the Board",
+  category: "Event Print Designs",
+  style: "Playful & Interactive",
   year: "2026",
-  description: "LinkedIn banner design",
-  image: "/images/linkedin-banner-01.png",
+  description: "Large-format prints and interactive designs for college events",
+  image: "/images/events/coverimage.JPG", 
   featured: true,
-  layout: "banner",
-  placeholder: "default",
+  layout: "wide",
+  placeholder: "event-print",
+
+  story: {
+    label: "EVENT DESIGN",
+    heading: "Designing experiences beyond the screen.",
+    paragraphs: [
+      "A collection of print designs created for college events, bringing interactive games and shared experiences into the physical space.",
+      "The project includes a 20 × 20 ft Snake and Ladders game, a 6 × 4 ft reflection wall, small-format game placards, and a 70 cm diameter Spin the Wheel. Each piece was designed for physical production and use during the event."
+    ]
+  },
+
+  eventPrintSections: [
+    {
+      number: "01",
+      title: "Snake & Ladders",
+      label: "LARGE-FORMAT PRINT",
+      dimensions: "20 × 20 ft",
+      description: "A life-sized Snake and Ladders game designed for an interactive event experience.",
+      image: "/images/events/snake-and-ladders.png",
+      type: "snake-ladders"
+    },
+    {
+      number: "02",
+      title: "Reflection Wall",
+      label: "INTERACTIVE INSTALLATION",
+      dimensions: "6 × 4 ft",
+      description: "A printed reflection wall created as a shared space for participants to engage and contribute.",
+      image: "/images/events/reflection-wall.jpg",
+      type: "reflection-wall"
+    },
+    {
+      number: "03",
+      title: "Game Placards",
+      label: "SMALL-FORMAT PRINT",
+      dimensions: "Various sizes",
+      description: "Supporting placards designed to guide participants through the event games and activities.",
+      image: "/images/events/game-placards.jpg",
+      type: "game-placards"
+    },
+    {
+      number: "04",
+      title: "Spin the Wheel",
+      label: "INTERACTIVE GAME",
+      dimensions: "70 cm diameter",
+      description: "A circular printed game wheel designed to bring an extra element of interaction to the event.",
+      image: "/images/events/spin-the-wheel.png",
+      type: "spin-wheel"
+    }
+  ]
 },
-{
-  id: "08",
-  title: "LinkedIn Banner — Two",
-  category: "Other",
-  style: "Minimal",
-  year: "2026",
-  description: "LinkedIn banner design",
-  image: "/images/linkedin-banner-02.png",
-  featured: true,
-  layout: "banner",
-  placeholder: "default",
-},
+
 
 ];
 

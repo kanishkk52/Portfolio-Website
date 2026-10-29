@@ -83,6 +83,7 @@ const stationeryItems = [
   },
 ];
 
+/* NJA case study images */
 function NjaCaseStudyImage({ section }) {
   if (section.type === "newsletter") {
     return (
@@ -117,7 +118,7 @@ function NjaCaseStudyImage({ section }) {
   );
 }
 
-/* Enlarged stationery image overlay */
+/* Reusable enlarged image overlay */
 function StationeryLightbox({ item, onClose }) {
   useEffect(() => {
     if (!item) return;
@@ -129,7 +130,6 @@ function StationeryLightbox({ item, onClose }) {
     };
 
     const previousOverflow = document.body.style.overflow;
-
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
 
@@ -170,6 +170,7 @@ function StationeryLightbox({ item, onClose }) {
   );
 }
 
+/* Existing NJA case study */
 function NjaCaseStudy() {
   const [selectedStationery, setSelectedStationery] = useState(null);
 
@@ -196,7 +197,6 @@ function NjaCaseStudy() {
               <span className="section-kicker">
                 {section.number} / {section.label}
               </span>
-
               <h2>{section.title}</h2>
             </div>
 
@@ -213,7 +213,6 @@ function NjaCaseStudy() {
             <span className="section-kicker">
               05 / PRINT AND STATIONERY
             </span>
-
             <h2>Brand identity in print.</h2>
           </div>
 
@@ -263,6 +262,133 @@ function NjaCaseStudy() {
   );
 }
 
+/* New event print design case study */
+
+function EventPrintCaseStudy({ project }) {
+  const sections = project.eventPrintSections || [];
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
+
+  const closeLightbox = useCallback(() => {
+    setSelectedArtwork(null);
+  }, []);
+
+  const handleArtworkKeyDown = (event, section) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedArtwork({
+        title: section.title,
+        image: section.image,
+      });
+    }
+  };
+
+  return (
+    <div className="event-print-case-study">
+      <header className="event-print-intro">
+        <span className="section-kicker">
+          EVENT PRODUCTION / PRINT DESIGN
+        </span>
+
+        <h2>
+          Made to be <span>experienced.</span>
+        </h2>
+
+        <p>
+          From a life-sized board game to interactive event
+          installations, these designs were created to move
+          beyond the screen and become part of the experience.
+        </p>
+      </header>
+
+      <div className="event-print-sections">
+        {sections.map((section, index) => {
+          const isWheel = section.type === "spin-wheel";
+
+          return (
+            <section
+              key={section.number || section.type}
+              className={`event-print-section event-print-${section.type}`}
+            >
+              <div className="event-print-copy">
+                <span className="section-kicker">
+                  {section.number || String(index + 1).padStart(2, "0")}{" "}
+                  / {section.label}
+                </span>
+
+                <h2>{section.title}</h2>
+
+                <p className="event-print-dimensions">
+                  {section.dimensions}
+                </p>
+
+                <p className="event-print-description">
+                  {section.description}
+                </p>
+              </div>
+
+              <div
+                className={`event-print-artwork ${
+                  isWheel ? "event-print-wheel-artwork" : ""
+                }`}
+                role="button"
+                tabIndex={0}
+                aria-label={`Enlarge ${section.title}`}
+                onClick={() =>
+                  setSelectedArtwork({
+                    title: section.title,
+                    image: section.image,
+                  })
+                }
+                onKeyDown={(event) =>
+                  handleArtworkKeyDown(event, section)
+                }
+              >
+                <img
+                  src={section.image}
+                  alt={`${section.title} print design`}
+                  loading="lazy"
+                  className={
+                    isWheel
+                      ? "event-print-wheel-image"
+                      : "event-print-image"
+                  }
+                />
+
+                <span className="event-print-enlarge-hint">
+                  CLICK TO ENLARGE ↗
+                </span>
+
+                {isWheel && (
+                  <span className="event-print-hover-hint">
+                    HOVER TO SPIN
+                  </span>
+                )}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <div className="event-print-outro">
+        <span className="section-kicker">
+          CONCEPT / DESIGN / PRODUCTION
+        </span>
+
+        <p>
+          Designed for real spaces, real interactions, and
+          shared experiences.
+        </p>
+      </div>
+
+      <StationeryLightbox
+        item={selectedArtwork}
+        onClose={closeLightbox}
+      />
+    </div>
+  );
+}
+
+
 export default function ProjectDetail({ theme, onToggleTheme }) {
   const { projectId } = useParams();
 
@@ -273,16 +399,11 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
   if (!project) {
     return (
       <div className={`app-shell theme-${theme}`}>
-        <Navbar
-          theme={theme}
-          onToggleTheme={onToggleTheme}
-        />
+        <Navbar theme={theme} onToggleTheme={onToggleTheme} />
 
         <main className="page-shell project-not-found">
           <span className="section-kicker">404 / NOT FOUND</span>
-
           <h1>Project not found.</h1>
-
           <p>This project may have moved or doesn't exist yet.</p>
 
           <Link to="/work" className="text-link">
@@ -306,15 +427,12 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
     .filter((item) => String(item.id) !== String(project.id))
     .slice(0, 2);
 
-  // Show additional case study sections only for NJA.
   const isNjaProject = String(project.id) === "01";
+  const isEventPrintProject = String(project.id) === "09";
 
   return (
     <div className={`app-shell theme-${theme}`}>
-      <Navbar
-        theme={theme}
-        onToggleTheme={onToggleTheme}
-      />
+      <Navbar theme={theme} onToggleTheme={onToggleTheme} />
 
       <main className="project-detail page-shell">
         <Link to="/work" className="text-link back-link">
@@ -363,7 +481,10 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
               description={
                 project.viewerDescription || project.description
               }
-              documentLabel={`${project.style.toUpperCase()} / EDITORIAL DESIGN`}
+              documentLabel={
+                project.documentLabel ||
+                `${project.style.toUpperCase()} / EDITORIAL DESIGN`
+              }
             />
           ) : project.image?.trim() ? (
             <img
@@ -378,9 +499,7 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
               }`}
             >
               <span>PROJECT / {project.id}</span>
-
               <h2>{project.title}</h2>
-
               <p>
                 {project.category} · {project.style}
               </p>
@@ -409,8 +528,12 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
           </section>
         )}
 
-        {/* NJA case study sections */}
+        {/* Project-specific case studies */}
         {isNjaProject && <NjaCaseStudy />}
+
+        {isEventPrintProject && (
+          <EventPrintCaseStudy project={project} />
+        )}
 
         {/* Previous and next projects */}
         <section className="project-navigation">
@@ -462,7 +585,6 @@ export default function ProjectDetail({ theme, onToggleTheme }) {
       </main>
 
       <ContactCTA />
-
       <Footer />
     </div>
   );
