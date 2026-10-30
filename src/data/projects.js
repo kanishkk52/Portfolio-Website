@@ -134,7 +134,18 @@ story: {
 
   eventPrintSections: [
     {
-      number: "01",
+  number: "01",
+  title: "Event ID Cards & Lanyards",
+  label: "EVENT IDENTITY",
+  dimensions: "Volunteer identification",
+  description:
+    "A coordinated event identity system featuring custom-designed volunteer ID cards and branded lanyards, bringing consistency and recognition to the event team.",
+  image: "/images/events/event-id-cards.png",
+  type: "event-identity"
+},
+    
+    {
+      number: "02",
       title: "Snake & Ladders",
       label: "LARGE-FORMAT PRINT",
       dimensions: "20 × 20 ft",
@@ -143,7 +154,7 @@ story: {
       type: "snake-ladders"
     },
     {
-      number: "02",
+      number: "03",
       title: "Reflection Wall",
       label: "INTERACTIVE INSTALLATION",
       dimensions: "6 × 4 ft",
@@ -152,7 +163,7 @@ story: {
       type: "reflection-wall"
     },
     {
-      number: "03",
+      number: "04",
       title: "Game Placards",
       label: "SMALL-FORMAT PRINT",
       dimensions: "Various sizes",
@@ -161,7 +172,7 @@ story: {
       type: "game-placards"
     },
     {
-      number: "04",
+      number: "05",
       title: "Spin the Wheel",
       label: "INTERACTIVE GAME",
       dimensions: "70 cm diameter",
