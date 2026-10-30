@@ -8,8 +8,9 @@ export default function ProjectCard({ project, index = 0 }) {
     project.image.trim().length > 0;
 
   const [imageFailed, setImageFailed] = useState(false);
-  const placeholder = project.placeholder || "default";
+  const [imageLoaded, setImageLoaded] = useState(false);
 
+  const placeholder = project.placeholder || "default";
   const showImage = hasImage && !imageFailed;
 
   return (
@@ -22,20 +23,38 @@ export default function ProjectCard({ project, index = 0 }) {
         aria-label={`View project: ${project.title}`}
       >
         <div className={`project-art placeholder-${placeholder}`}>
+
+          {/* Image skeleton */}
+          {showImage && !imageLoaded && (
+            <div
+              className="project-image-skeleton"
+              aria-hidden="true"
+            />
+          )}
+
+          {/* Actual project image */}
           {showImage ? (
             <img
-              className="project-image"
+              className={`project-image ${
+                imageLoaded ? "image-loaded" : "image-loading"
+              }`}
               src={project.image}
               alt={`${project.title} - ${project.category}`}
               loading="lazy"
               decoding="async"
-              onError={() => setImageFailed(true)}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                setImageFailed(true);
+                setImageLoaded(false);
+              }}
               style={{
                 objectPosition: project.imagePosition || "center",
               }}
             />
           ) : (
+            /* Existing placeholder graphics */
             <div className="placeholder-graphic" aria-hidden="true">
+
               {placeholder === "identity" && (
                 <div className="graphic-identity">
                   <span className="identity-symbol">K.</span>
@@ -122,6 +141,7 @@ export default function ProjectCard({ project, index = 0 }) {
             </div>
           )}
 
+          {/* Existing project overlay */}
           <div className="project-overlay">
             <div className="art-topline">
               <span>SELECTED WORK</span>
@@ -148,6 +168,7 @@ export default function ProjectCard({ project, index = 0 }) {
           </span>
         </div>
 
+        {/* Existing project metadata */}
         <div className="project-meta">
           <div>
             <h3>{project.title}</h3>

@@ -7241,3 +7241,78 @@ body:has(.theme-light) {
     transition: none;
   }
 }
+
+
+/* =========================================
+   PROJECT IMAGE SKELETON
+========================================= */
+
+.project-art {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Loading placeholder */
+
+.project-image-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #e9e6df;
+  overflow: hidden;
+}
+
+.theme-dark .project-image-skeleton {
+  background: #292929;
+}
+
+.project-image-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  animation: project-image-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Actual image */
+
+.project-image {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.project-image.image-loaded {
+  opacity: 1;
+}
+
+.project-image.image-loading {
+  opacity: 0;
+}
+
+/* Shimmer animation */
+
+@keyframes project-image-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-image-skeleton::after {
+    animation: none;
+  }
+
+  .project-image {
+    transition: none;
+  }
+}
