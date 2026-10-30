@@ -26,11 +26,11 @@ export default function ProjectCard({ project, index = 0 }) {
 
           {/* Image skeleton */}
           {showImage && !imageLoaded && (
-            <div
-              className="project-image-skeleton"
-              aria-hidden="true"
-            />
-          )}
+  <div
+    className="project-image-skeleton"
+    aria-hidden="true"
+  />
+)}
 
           {/* Actual project image */}
           {showImage ? (

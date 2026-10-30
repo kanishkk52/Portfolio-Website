@@ -1,50 +1,64 @@
 
 /* =========================================
    PAGE SKELETON LOADING
+   Calm, static editorial appearance
 ========================================= */
 
 .page-skeleton {
   --skeleton-base: #e9e6df;
-  --skeleton-highlight: #f7f5f0;
+  --skeleton-highlight: #e9e6df;
   --skeleton-text: #252525;
 
   min-height: 100vh;
   width: 100%;
   padding: 0 6%;
   color: var(--skeleton-text);
-  overflow: hidden;
-  animation: skeleton-page-enter 0.35s ease both;
+  background: #f5f2ea;
 }
 
 .skeleton-dark {
   --skeleton-base: #292929;
-  --skeleton-highlight: #393939;
+  --skeleton-highlight: #292929;
   --skeleton-text: #f1f1f1;
+
   background: #111;
 }
 
 .skeleton-light {
   --skeleton-base: #e9e6df;
-  --skeleton-highlight: #f7f5f0;
+  --skeleton-highlight: #e9e6df;
   --skeleton-text: #252525;
+
   background: #f5f2ea;
 }
 
-/* Navbar */
+/* =========================================
+   COMMON SKELETON BLOCK
+========================================= */
+
+.skeleton-block {
+  background: var(--skeleton-base);
+  border-radius: 4px;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
 
 .skeleton-navbar {
   width: 100%;
   min-height: 90px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   border-bottom: 1px solid var(--skeleton-base);
 }
 
 .skeleton-logo {
   width: 115px;
   height: 24px;
-  border-radius: 4px;
 }
 
 .skeleton-nav-links {
@@ -65,36 +79,19 @@
   border-radius: 50%;
 }
 
-/* Shared skeleton block */
-
-.skeleton-block {
-  position: relative;
-  overflow: hidden;
-  background: var(--skeleton-base);
-}
-
-.skeleton-block::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--skeleton-highlight),
-    transparent
-  );
-  animation: skeleton-shimmer 1.5s ease-in-out infinite;
-}
-
-/* Main content */
+/* =========================================
+   MAIN CONTENT
+========================================= */
 
 .skeleton-content {
   max-width: 1440px;
   margin: 0 auto;
+
   padding-top: 100px;
   padding-bottom: 100px;
 }
+
+/* Heading */
 
 .skeleton-heading {
   margin-bottom: 55px;
@@ -110,7 +107,6 @@
 .skeleton-title {
   width: min(480px, 75%);
   height: 65px;
-  border-radius: 5px;
   margin-bottom: 20px;
 }
 
@@ -120,7 +116,9 @@
   border-radius: 10px;
 }
 
-/* Work filters */
+/* =========================================
+   WORK PAGE FILTERS
+========================================= */
 
 .skeleton-filter-row {
   display: flex;
@@ -135,7 +133,9 @@
   border-radius: 30px;
 }
 
-/* Work project cards */
+/* =========================================
+   WORK PROJECT GRID
+========================================= */
 
 .skeleton-project-grid {
   display: grid;
@@ -150,14 +150,13 @@
 .skeleton-card-image {
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 5px;
   margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .skeleton-card-title {
   width: 45%;
   height: 18px;
-  border-radius: 4px;
   margin-bottom: 12px;
 }
 
@@ -167,7 +166,9 @@
   border-radius: 10px;
 }
 
-/* Project detail */
+/* =========================================
+   PROJECT DETAIL PAGE
+========================================= */
 
 .skeleton-back-link {
   width: 95px;
@@ -183,6 +184,8 @@
   margin-bottom: 50px;
 }
 
+/* Project information */
+
 .skeleton-project-info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -191,14 +194,16 @@
 }
 
 .skeleton-info-line {
-  height: 14px;
   width: 80%;
+  height: 14px;
   border-radius: 10px;
 }
 
 .skeleton-info-line.short {
   width: 55%;
 }
+
+/* Project gallery */
 
 .skeleton-gallery {
   display: grid;
@@ -219,37 +224,9 @@
   border-radius: 5px;
 }
 
-/* Animations */
-
-@keyframes skeleton-shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes skeleton-page-enter {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Accessibility */
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton-block::after {
-    animation: none;
-  }
-
-  .page-skeleton {
-    animation: none;
-  }
-}
-
-/* Responsive */
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 768px) {
   .page-skeleton {

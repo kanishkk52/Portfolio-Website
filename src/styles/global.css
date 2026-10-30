@@ -7244,7 +7244,7 @@ body:has(.theme-light) {
 
 
 /* =========================================
-   PROJECT IMAGE SKELETON
+   PROJECT CARD IMAGE LOADING
 ========================================= */
 
 .project-art {
@@ -7252,32 +7252,18 @@ body:has(.theme-light) {
   overflow: hidden;
 }
 
-/* Loading placeholder */
+/* Static image placeholder */
 
 .project-image-skeleton {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: #e9e6df;
-  overflow: hidden;
+  background: #eae7e0;
+  opacity: 1;
 }
 
 .theme-dark .project-image-skeleton {
   background: #292929;
-}
-
-.project-image-skeleton::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.45),
-    transparent
-  );
-  animation: project-image-shimmer 1.5s ease-in-out infinite;
 }
 
 /* Actual image */
@@ -7286,7 +7272,7 @@ body:has(.theme-light) {
   position: relative;
   z-index: 2;
   opacity: 0;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.4s ease;
 }
 
 .project-image.image-loaded {
@@ -7297,21 +7283,9 @@ body:has(.theme-light) {
   opacity: 0;
 }
 
-/* Shimmer animation */
-
-@keyframes project-image-shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Accessibility */
+/* Reduced motion accessibility */
 
 @media (prefers-reduced-motion: reduce) {
-  .project-image-skeleton::after {
-    animation: none;
-  }
-
   .project-image {
     transition: none;
   }
