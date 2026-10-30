@@ -6,11 +6,10 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-
+import CustomCursor from "./components/CustomCursor";
 import SplashScreen from "./components/SplashScreen";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollProgress from "./components/ScrollProgress";
-
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -137,7 +136,7 @@ function App() {
   return (
     <BrowserRouter>
       <SplashScreen theme={theme} />
-
+        <CustomCursor />
       <ScrollToTop />
 
       {/* Fixed scroll indicator across all routes */}

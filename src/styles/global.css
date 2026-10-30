@@ -7290,3 +7290,169 @@ body:has(.theme-light) {
     transition: none;
   }
 }
+
+
+/* =========================================
+   MINIMAL PEN TOOL CURSOR
+========================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor body * {
+    cursor: none !important;
+  }
+}
+
+.custom-pen-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+
+  /*
+    The SVG tip is at viewBox coordinate 3,3.
+    Offset it so that the tip aligns with the mouse.
+  */
+  margin-left: -3px;
+  margin-top: -3px;
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.custom-pen-cursor.cursor-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Pen icon */
+
+.pen-cursor-icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+
+  color: #171717;
+
+  transform-origin: 3px 3px;
+
+  transition: transform 0.18s ease;
+}
+
+.theme-dark .pen-cursor-icon {
+  color: #ffffff;
+}
+
+/* Image hover */
+
+.custom-pen-cursor.cursor-enlarge-mode .pen-cursor-icon {
+  transform: scale(0.92);
+}
+
+/* Context label */
+
+.cursor-context-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: -3px;
+  margin-left: 5px;
+  padding: 9px 12px;
+
+  background: #D6F36A;
+  color: #171717;
+
+  border-radius: 3px;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+
+  animation: cursor-label-enter 0.18s ease both;
+}
+
+.cursor-label-arrow {
+  font-size: 13px;
+}
+
+/* Label animation */
+
+@keyframes cursor-label-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Click feedback */
+
+.custom-pen-cursor.cursor-pressed .pen-cursor-icon {
+  transform: scale(0.82);
+}
+
+/* Touch devices */
+
+@media (hover: none), (pointer: coarse) {
+  .custom-pen-cursor {
+    display: none !important;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-pen-cursor,
+  .pen-cursor-icon,
+  .cursor-context-label {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Hover hint: Light theme */
+.theme-light .event-print-hover-hint {
+  background: #D6F36A;
+  color: #171717;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+  opacity: 1;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Hover hint: Dark theme */
+.theme-dark .event-print-hover-hint {
+  /* Preserve existing dark theme appearance */
+}
+/* =========================================
+   BEYOND THE BOARD INTRO - LIGHT THEME
+========================================= */
+
+.app-shell.theme-light .event-print-intro h2,
+.app-shell.theme-light .event-print-intro h2 span {
+  color: #252525 !important;
+}
+
+.app-shell.theme-light .event-print-intro p {
+  color: #555555 !important;
+}

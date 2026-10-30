@@ -227,6 +227,7 @@ function NjaCaseStudy() {
           {stationeryItems.map((item, index) => (
             <div
               className={`nja-stationery-item nja-stationery-item-${index + 1}`}
+              data-cursor-label="CLICK TO ENLARGE"
               key={item.title}
               tabIndex={0}
               role="button"
@@ -330,6 +331,7 @@ function EventPrintCaseStudy({ project }) {
                 className={`event-print-artwork ${
                   isWheel ? "event-print-wheel-artwork" : ""
                 }`}
+                data-cursor-label="CLICK TO ENLARGE"
                 role="button"
                 tabIndex={0}
                 aria-label={`Enlarge ${section.title}`}
@@ -354,9 +356,9 @@ function EventPrintCaseStudy({ project }) {
                   }
                 />
 
-                <span className="event-print-enlarge-hint">
+                {/* <span className="event-print-enlarge-hint">
                   CLICK TO ENLARGE ↗
-                </span>
+                </span> */}
 
                 {isWheel && (
                   <span className="event-print-hover-hint">

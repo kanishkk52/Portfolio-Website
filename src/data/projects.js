@@ -27,6 +27,77 @@ export const projects = [
   }
 },
 
+{
+  id: "09",
+  title: "Beyond the Board",
+  category: "Event Print Designs",
+  style: "Playful & Interactive",
+  year: "2026",
+  description: "Large-format prints and interactive designs for college events",
+  image: "/images/events/coverimage.JPG", 
+  featured: true,
+  layout: "wide",
+  placeholder: "event-print",
+
+  story: {
+    label: "EVENT DESIGN",
+    heading: "Designing experiences beyond the screen.",
+    paragraphs: [
+      "A collection of print designs created for college events, bringing interactive games and shared experiences into the physical space.",
+      "The project includes a 20 × 20 ft Snake and Ladders game, a 6 × 4 ft reflection wall, small-format game placards, and a 70 cm diameter Spin the Wheel. Each piece was designed for physical production and use during the event."
+    ]
+  },
+
+  eventPrintSections: [
+    {
+  number: "01",
+  title: "Event ID Cards & Lanyards",
+  label: "EVENT IDENTITY",
+  dimensions: "Volunteer identification",
+  description:
+    "A coordinated event identity system featuring custom-designed volunteer ID cards and branded lanyards, bringing consistency and recognition to the event team.",
+  image: "/images/events/event-id-cards.png",
+  type: "event-identity"
+},
+    
+    {
+      number: "02",
+      title: "Snakes & Ladders",
+      label: "LARGE-FORMAT PRINT",
+      dimensions: "20 × 20 ft",
+      description: "A life-sized Snakes and Ladders game designed for an interactive event experience.",
+      image: "/images/events/snake-and-ladders.png",
+      type: "snake-ladders"
+    },
+    {
+      number: "03",
+      title: "Reflection Wall",
+      label: "INTERACTIVE INSTALLATION",
+      dimensions: "6 × 4 ft",
+      description: "A printed reflection wall created as a shared space for participants to engage and contribute.",
+      image: "/images/events/reflection-wall.jpg",
+      type: "reflection-wall"
+    },
+    {
+      number: "04",
+      title: "Game Placards",
+      label: "SMALL-FORMAT PRINT",
+      dimensions: "Various sizes",
+      description: "Supporting placards designed to guide participants through the event games and activities.",
+      image: "/images/events/game-placards.png",
+      type: "game-placards"
+    },
+    {
+      number: "05",
+      title: "Spin the Wheel",
+      label: "INTERACTIVE GAME",
+      dimensions: "70 cm diameter",
+      description: "A circular printed game wheel designed to bring an extra element of interaction to the event.",
+      image: "/images/events/spin-the-wheel.png",
+      type: "spin-wheel"
+    }
+  ]
+},
     
 {
   id: "02",
@@ -111,77 +182,7 @@ story: {
   
 
 
-{
-  id: "09",
-  title: "Beyond the Board",
-  category: "Event Print Designs",
-  style: "Playful & Interactive",
-  year: "2026",
-  description: "Large-format prints and interactive designs for college events",
-  image: "/images/events/coverimage.JPG", 
-  featured: true,
-  layout: "wide",
-  placeholder: "event-print",
 
-  story: {
-    label: "EVENT DESIGN",
-    heading: "Designing experiences beyond the screen.",
-    paragraphs: [
-      "A collection of print designs created for college events, bringing interactive games and shared experiences into the physical space.",
-      "The project includes a 20 × 20 ft Snake and Ladders game, a 6 × 4 ft reflection wall, small-format game placards, and a 70 cm diameter Spin the Wheel. Each piece was designed for physical production and use during the event."
-    ]
-  },
-
-  eventPrintSections: [
-    {
-  number: "01",
-  title: "Event ID Cards & Lanyards",
-  label: "EVENT IDENTITY",
-  dimensions: "Volunteer identification",
-  description:
-    "A coordinated event identity system featuring custom-designed volunteer ID cards and branded lanyards, bringing consistency and recognition to the event team.",
-  image: "/images/events/event-id-cards.png",
-  type: "event-identity"
-},
-    
-    {
-      number: "02",
-      title: "Snake & Ladders",
-      label: "LARGE-FORMAT PRINT",
-      dimensions: "20 × 20 ft",
-      description: "A life-sized Snake and Ladders game designed for an interactive event experience.",
-      image: "/images/events/snake-and-ladders.png",
-      type: "snake-ladders"
-    },
-    {
-      number: "03",
-      title: "Reflection Wall",
-      label: "INTERACTIVE INSTALLATION",
-      dimensions: "6 × 4 ft",
-      description: "A printed reflection wall created as a shared space for participants to engage and contribute.",
-      image: "/images/events/reflection-wall.jpg",
-      type: "reflection-wall"
-    },
-    {
-      number: "04",
-      title: "Game Placards",
-      label: "SMALL-FORMAT PRINT",
-      dimensions: "Various sizes",
-      description: "Supporting placards designed to guide participants through the event games and activities.",
-      image: "/images/events/game-placards.jpg",
-      type: "game-placards"
-    },
-    {
-      number: "05",
-      title: "Spin the Wheel",
-      label: "INTERACTIVE GAME",
-      dimensions: "70 cm diameter",
-      description: "A circular printed game wheel designed to bring an extra element of interaction to the event.",
-      image: "/images/events/spin-the-wheel.png",
-      type: "spin-wheel"
-    }
-  ]
-},
 
 
 ];

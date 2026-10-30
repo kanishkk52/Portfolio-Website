@@ -145,7 +145,7 @@ export default function ProjectCard({ project, index = 0 }) {
           <div className="project-overlay">
             <div className="art-topline">
               <span>SELECTED WORK</span>
-              <span>/{project.id}</span>
+              <span>/{String(index + 1).padStart(2, "0")}</span>
             </div>
 
             <div className="art-center">
