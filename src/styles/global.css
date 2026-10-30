@@ -7441,9 +7441,9 @@ body:has(.theme-light) {
 }
 
 /* Hover hint: Dark theme */
-.theme-dark .event-print-hover-hint {
-  /* Preserve existing dark theme appearance */
-}
+/* .theme-dark .event-print-hover-hint {
+  
+} */
 /* =========================================
    BEYOND THE BOARD INTRO - LIGHT THEME
 ========================================= */
