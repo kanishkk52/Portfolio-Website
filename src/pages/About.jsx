@@ -127,7 +127,9 @@ export default function About({ theme, onToggleTheme }) {
           </h1>
 
           <div className="about-intro-grid">
-            <div className="about-page-portrait">
+            <div className="about-page-portrait"
+            data-cursor-label="KANISHK KUKREJA"
+            >
               <img
                 src="/images/profile.png"
                 alt="Portrait"
@@ -177,30 +179,45 @@ export default function About({ theme, onToggleTheme }) {
           </div>
         </section>
 
-        {/* ACHIEVEMENTS */}
-        <section className="about-module">
-          <div className="about-module-heading">
-            <span className="section-kicker">01 / MILESTONES</span>
-            <h2>
-              Things I've <span>achieved.</span>
-            </h2>
-          </div>
+        
+{/* ACHIEVEMENTS */}
+<section className="about-module">
+  <div className="about-module-heading milestones-heading-row">
+    <div>
+      <span className="section-kicker">01 / MILESTONES</span>
 
-          <div className="achievement-grid">
-            {achievements.map((item) => (
-              <article className="achievement-card" key={item.number}>
-                <div className="achievement-card-top">
-                  <span>{item.number}</span>
-                  <span>{item.tag}</span>
-                </div>
+      <h2>
+        Things I've <span>achieved.</span>
+      </h2>
+    </div>
 
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <span className="achievement-arrow">↗</span>
-              </article>
-            ))}
-          </div>
-        </section>
+    <a
+      href="https://drive.google.com/drive/folders/19yNcajupTizw22h52Am7EogrLsiswc5R?usp=sharing"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="extra-certificates-button"
+    >
+      <span>EXTRA-CURRICULAR CERTIFICATES</span>
+      <span className="extra-certificates-arrow">↗</span>
+    </a>
+  </div>
+
+  <div className="achievement-grid">
+    {achievements.map((item) => (
+      <article className="achievement-card" key={item.number}>
+        <div className="achievement-card-top">
+          <span>{item.number}</span>
+          <span>{item.tag}</span>
+        </div>
+
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+        <span className="achievement-arrow">↗</span>
+      </article>
+    ))}
+  </div>
+</section>
+
 
         {/* SKILLS */}
         <section className="about-module">
@@ -331,9 +348,9 @@ export default function About({ theme, onToggleTheme }) {
               worth remembering.
             </p>
 
-            <Link to="/#contact" className="text-link">
+            {/* <Link to="/#contact" className="text-link">
               Let's talk <span>↗</span>
-            </Link>
+            </Link> */}
           </div>
 
           <Link to="/work" className="text-link">

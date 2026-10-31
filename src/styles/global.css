@@ -7169,7 +7169,11 @@ a:focus-visible {
   -webkit-text-fill-color: #d6f36a !important;
   background: transparent !important;
 }
-/* Global ivory theme */
+
+/* =========================================
+   GLOBAL IVORY THEME
+========================================= */
+
 .theme-light {
   --bg-primary: #F5F2EA;
   --bg-secondary: #EDE9DF;
@@ -7187,6 +7191,7 @@ body:has(.theme-light) {
 }
 
 /* Main page wrappers */
+
 .theme-light .app-shell,
 .theme-light main,
 .theme-light .page-shell {
@@ -7194,24 +7199,90 @@ body:has(.theme-light) {
 }
 
 /* Cards and secondary surfaces */
+
 .theme-light .project-card,
 .theme-light .project-meta,
 .theme-light .work-filters {
   background-color: transparent;
 }
 
-/* Keep dark theme unchanged */
+/* =========================================
+   DARK THEME
+   Preserve existing appearance
+========================================= */
+
 .theme-dark {
   background-color: #151515;
   color: #F5F5F2;
 }
-/* Make the About section consistent with the global ivory theme */
-.theme-light .about-section,
+
+/* =========================================
+   ABOUT SECTION - LIGHT THEME
+========================================= */
+
+/* Only the main section receives the background */
+
+.theme-light .about-section {
+  background-color: #F5F2EA !important;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Inner wrappers must remain transparent */
+
 .theme-light .about-section .about-container,
 .theme-light .about-section .about-content,
 .theme-light .about-section .about-inner {
-  background-color: #F5F2EA !important;
+  background-color: transparent !important;
 }
+
+/* =========================================
+   ABOUT CONSTELLATION LAYERING
+========================================= */
+
+/* Constellation stays above the background */
+
+.about-section .constellation-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent !important;
+}
+
+/* Canvas fills the constellation container */
+
+.about-section .constellation-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+
+/* Actual About content stays above constellation */
+
+.about-section .about-container,
+.about-section .about-content,
+.about-section .about-inner {
+  position: relative;
+  z-index: 1;
+  background-color: transparent !important;
+}
+
+/* =========================================
+   ABOUT SECTION - DARK THEME
+========================================= */
+
+.theme-dark .about-section {
+  background-color: #151515;
+}
+
+.theme-dark .about-section .about-container,
+.theme-dark .about-section .about-content,
+.theme-dark .about-section .about-inner {
+  background-color: transparent;
+}
+
 
 /* Scroll progress line below the navbar */
 .scroll-progress-track {
@@ -7455,4 +7526,217 @@ body:has(.theme-light) {
 
 .app-shell.theme-light .event-print-intro p {
   color: #555555 !important;
+}
+
+/* =========================================
+   ABOUT PORTRAIT - NEO BRUTALIST CURSOR
+========================================= */
+
+.cursor-context-label {
+  background: #D6F36A !important;
+  color: #171717 !important;
+
+  border: 1.5px solid #171717;
+  border-radius: 2px;
+
+  padding: 10px 13px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  box-shadow: 4px 4px 0 #171717;
+
+  white-space: nowrap;
+}
+
+/* Name label arrow */
+
+.cursor-label-arrow {
+  color: #171717;
+  font-weight: 900;
+}
+
+/* Slightly stronger interaction */
+
+.custom-pen-cursor.cursor-enlarge-mode
+.cursor-context-label {
+  transform: translateY(-2px);
+}
+
+/* Keep the same visual identity in both themes */
+
+.theme-light .about-portrait,
+.theme-dark .about-portrait {
+  cursor: none;
+}
+
+
+/* =========================================
+   EXTRA CERTIFICATES BUTTON
+========================================= */
+
+.milestones-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.extra-certificates-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 13px 16px;
+  margin-bottom: 62px;
+
+  background: #D6F36A;
+  color: #20201E;
+
+  border: 1px solid #20201E;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #20201E;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.extra-certificates-arrow {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.extra-certificates-button:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #20201E;
+}
+
+/* Dark theme */
+
+.theme-dark .extra-certificates-button {
+  background: #D6F36A;
+  color: #20201E;
+  border-color: #D6F36A;
+  box-shadow: 4px 4px 0 #ffffff;
+}
+
+.theme-dark .extra-certificates-button:hover {
+  box-shadow: 1px 1px 0 #D6F36A;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .milestones-heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .extra-certificates-button {
+    margin-bottom: 5px;
+  }
+}
+
+
+
+/* =========================================
+   CERTIFICATION VERIFY BUTTONS
+   Neo-brutalist style
+========================================= */
+
+.certification-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 10px 16px;
+
+  background: #D6F36A;
+  color: #20201E !important;
+
+  border: 1px solid #20201E;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #20201E;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.certification-link:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #20201E;
+}
+
+.certification-link:focus-visible {
+  outline: 2px solid #20201E;
+  outline-offset: 5px;
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
+
+.theme-dark .certification-link {
+  background: #D6F36A;
+  color: #20201E !important;
+
+  border-color: #FFFFFF;
+  box-shadow: 4px 4px 0 #FFFFFF;
+}
+
+.theme-dark .certification-link:hover {
+  box-shadow: 1px 1px 0 #FFFFFF;
+}
+
+.theme-dark .certification-link:focus-visible {
+  outline-color: #FFFFFF;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .certification-link {
+    padding: 9px 12px;
+    font-size: 9px;
+  }
+}
+
+/* =========================================
+   ABOUT PAGE - CLOSING SECTION SPACING
+========================================= */
+
+.about-page-closing {
+  margin-bottom: 60px !important;
+  padding-bottom: 40px !important;
+}
+
+/* Reduce space before the contact CTA */
+.about-page + .contact-cta {
+  margin-top: 0 !important;
+}
+
+/* Prevent excessive bottom spacing on About page */
+.about-page {
+  padding-bottom: 0 !important;
 }

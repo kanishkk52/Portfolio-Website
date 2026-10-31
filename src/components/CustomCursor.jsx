@@ -37,14 +37,14 @@ export default function CustomCursor() {
     };
 
     const handlePointerOver = (event) => {
-      const target = event.target.closest("[data-cursor-label]");
+  const target = event.target.closest("[data-cursor-label]");
 
-      if (target) {
-        setLabel(target.dataset.cursorLabel || "CLICK TO ENLARGE");
-      } else {
-        setLabel("");
-      }
-    };
+  if (target) {
+    setLabel(target.dataset.cursorLabel || "");
+  } else {
+    setLabel("");
+  }
+};
 
     const handlePointerDown = () => {
       cursor.classList.add("cursor-pressed");
