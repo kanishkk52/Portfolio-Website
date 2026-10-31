@@ -1,4 +1,4 @@
-
+import PhotographyArchive from "../components/PhotographyArchive";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -77,26 +77,6 @@ const certifications = [
   },
 ];
 
-const explorations = [
-  {
-    title: "Photography",
-    category: "VISUAL STORIES",
-    image: "/images/about/photography-01.jpg",
-    className: "exploration-tall",
-  },
-  {
-    title: "Experiments",
-    category: "PERSONAL WORK",
-    image: "/images/about/experiments-01.jpg",
-    className: "",
-  },
-  {
-    title: "Frames & Places",
-    category: "OBSERVATIONS",
-    image: "/images/about/photography-02.jpg",
-    className: "",
-  },
-];
 
 export default function About({ theme, onToggleTheme }) {
   return (
@@ -292,44 +272,8 @@ export default function About({ theme, onToggleTheme }) {
           </div>
         </section>
 
-        {/* PERSONAL WORK */}
-        <section className="about-module">
-          <div className="about-module-heading">
-            <span className="section-kicker">04 / OUTSIDE THE FRAME</span>
-            <h2>
-              Beyond the <span>portfolio.</span>
-            </h2>
-            <p>
-              Not everything needs to become a project.
-              Some things are made simply to explore.
-            </p>
-          </div>
-
-          <div className="exploration-grid">
-            {explorations.map((item) => (
-              <article
-                className={`exploration-card ${item.className}`}
-                key={item.title}
-              >
-                <div className="exploration-image">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                  />
-                  <span>↗</span>
-                </div>
-
-                <div className="exploration-meta">
-                  <div>
-                    <span>{item.category}</span>
-                    <h3>{item.title}</h3>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* PHOTOGRAPHY ARCHIVE */}
+<PhotographyArchive />
 
         {/* CLOSING */}
         <section className="about-page-closing">
