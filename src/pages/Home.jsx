@@ -176,9 +176,10 @@ export default function Home({ theme, onToggleTheme }) {
                   </p>
 
                   
-                  <Link to="/about" className="text-link">
-                  Learn More <span>↗</span>
-                  </Link>
+                  <Link to="/about" className="about-learn-more">
+  <span>Learn More</span>
+  <span className="about-learn-more-arrow">↗</span>
+</Link>
 
                 </div>
               </div>

@@ -7740,3 +7740,79 @@ body:has(.theme-light) {
 .about-page {
   padding-bottom: 0 !important;
 }
+
+
+/* =========================================
+   ABOUT - NEO BRUTALIST LEARN MORE BUTTON
+========================================= */
+
+.about-learn-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  padding: 14px 19px;
+
+  background: #D6F36A;
+  color: #151515 !important;
+
+  border: 1px solid #151515;
+  box-shadow: 4px 4px 0 #151515;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+  cursor: pointer;
+}
+
+.about-learn-more-arrow {
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+/* Hover interaction */
+
+.about-learn-more:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #151515;
+}
+
+.about-learn-more:hover .about-learn-more-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Active interaction */
+
+.about-learn-more:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* Dark theme */
+
+.theme-dark .about-learn-more {
+  border-color: #F5F2EA;
+  box-shadow: 4px 4px 0 #F5F2EA;
+}
+
+.theme-dark .about-learn-more:hover {
+  box-shadow: 1px 1px 0 #F5F2EA;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .about-learn-more {
+    padding: 12px 15px;
+    gap: 22px;
+  }
+}
