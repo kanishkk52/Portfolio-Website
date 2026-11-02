@@ -1,92 +1,77 @@
 
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar({ theme, onToggleTheme }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [activeSection, setActiveSection] = useState("home");
 
   const isWorkPage =
     location.pathname === "/work" ||
     location.pathname.startsWith("/work/");
 
+  // Determine active navigation item
   useEffect(() => {
+    const pathname = location.pathname;
+
+    // Separate pages
+    if (pathname === "/about") {
+      setActiveSection("about");
+      return;
+    }
+
+    if (pathname === "/contact") {
+      setActiveSection("contact");
+      return;
+    }
+
     if (isWorkPage) {
       setActiveSection("work");
       return;
     }
 
-    let animationFrame;
+    // Homepage
+    if (pathname === "/") {
+      setActiveSection("home");
 
-    const updateActiveSection = () => {
-      const activationLine = window.innerHeight * 0.4;
+      const updateActiveSection = () => {
+        const activationLine = window.innerHeight * 0.4;
+        const selectedWork = document.getElementById("selected-work");
 
-      const contact = document.getElementById("contact");
-      const about = document.getElementById("about");
-      const selectedWork = document.getElementById("selected-work");
+        const workTop = selectedWork?.getBoundingClientRect().top;
 
-      const contactTop = contact?.getBoundingClientRect().top;
-      const aboutTop = about?.getBoundingClientRect().top;
-      const workTop = selectedWork?.getBoundingClientRect().top;
+        if (workTop != null && workTop <= activationLine) {
+          setActiveSection("work");
+        } else {
+          setActiveSection("home");
+        }
+      };
 
-      if (contactTop != null && contactTop <= activationLine) {
-        setActiveSection("contact");
-      } else if (aboutTop != null && aboutTop <= activationLine) {
-        setActiveSection("about");
-      } else if (workTop != null && workTop <= activationLine) {
-        setActiveSection("work");
-      } else {
-        setActiveSection("home");
-      }
-    };
+      const frame = requestAnimationFrame(updateActiveSection);
 
-    animationFrame = requestAnimationFrame(updateActiveSection);
+      window.addEventListener("scroll", updateActiveSection, {
+        passive: true,
+      });
 
-    window.addEventListener("scroll", updateActiveSection, {
-      passive: true,
-    });
+      window.addEventListener("resize", updateActiveSection);
 
-    window.addEventListener("resize", updateActiveSection);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
-    };
-  }, [isWorkPage, location.pathname]);
+      return () => {
+        cancelAnimationFrame(frame);
+        window.removeEventListener("scroll", updateActiveSection);
+        window.removeEventListener("resize", updateActiveSection);
+      };
+    }
+  }, [location.pathname, isWorkPage]);
 
   const navClass = (section) =>
     activeSection === section ? "nav-active" : "";
 
-  const scrollToSection = (event, sectionId) => {
-    // Allow normal React Router navigation from other pages.
-    if (location.pathname !== "/") return;
-
-    event.preventDefault();
-
-    const section = document.getElementById(sectionId);
-
-    if (!section) {
-      console.warn(`Section with id "${sectionId}" was not found.`);
-      return;
-    }
-
-    window.history.replaceState(null, "", `/#${sectionId}`);
-
-    section.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-
-    setActiveSection(sectionId);
-  };
-
+  // Home navigation
   const handleHomeClick = (event) => {
-    // If already on the homepage, scroll to the top.
     if (location.pathname === "/") {
       event.preventDefault();
-
-      window.history.replaceState(null, "", "/");
 
       window.scrollTo({
         top: 0,
@@ -95,13 +80,18 @@ export default function Navbar({ theme, onToggleTheme }) {
 
       setActiveSection("home");
     }
-    // Otherwise, React Router navigates to "/" normally.
+  };
+
+  // Navigate directly to Contact page
+  const handleContactClick = () => {
+    navigate("/contact");
   };
 
   return (
     <header className="site-header">
       <nav className="nav-shell" aria-label="Main navigation">
-        {/* Brand */}
+
+        {/* BRAND */}
         <Link
           className="wordmark"
           to="/"
@@ -110,13 +100,15 @@ export default function Navbar({ theme, onToggleTheme }) {
           KK's Canvas<span>®</span>
         </Link>
 
-        {/* Descriptor */}
+        {/* DESCRIPTOR */}
         <span className="nav-note">
           Independent Graphic Designer
         </span>
 
-        {/* Navigation links */}
+        {/* NAVIGATION LINKS */}
         <div className="nav-links">
+
+          {/* HOME */}
           <Link
             to="/"
             className={navClass("home")}
@@ -125,6 +117,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             Home
           </Link>
 
+          {/* WORK */}
           <Link
             to="/work"
             className={navClass("work")}
@@ -132,33 +125,33 @@ export default function Navbar({ theme, onToggleTheme }) {
             Work
           </Link>
 
+          {/* ABOUT */}
           <Link
-            to="/#about"
+            to="/about"
             className={navClass("about")}
-            onClick={(event) => scrollToSection(event, "about")}
           >
             About
           </Link>
 
+          {/* CONTACT */}
           <Link
-            to="/#contact"
+            to="/contact"
             className={navClass("contact")}
-            onClick={(event) => scrollToSection(event, "contact")}
+            onClick={handleContactClick}
           >
             Contact
           </Link>
 
-          {/* Availability CTA */}
+          {/* AVAILABILITY CTA */}
           <Link
-            to="/#contact"
+            to="/contact"
             className="availability"
-            onClick={(event) => scrollToSection(event, "contact")}
           >
             <span className="availability-dot" />
             Available for projects
           </Link>
 
-          {/* Theme toggle */}
+          {/* THEME TOGGLE */}
           <button
             type="button"
             className="theme-toggle"
@@ -178,6 +171,7 @@ export default function Navbar({ theme, onToggleTheme }) {
               {theme === "light" ? "Dark" : "Light"}
             </span>
           </button>
+
         </div>
       </nav>
     </header>

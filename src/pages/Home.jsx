@@ -1,5 +1,7 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProjectCard from "../components/ProjectCard";
@@ -19,17 +21,17 @@ export default function Home({ theme, onToggleTheme }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-  if (entry.isIntersecting) {
-    setTimeout(() => {
-      setAboutIsActive(true);
-    }, 350);
-  } else {
-    setAboutIsActive(false);
-  }
-},
-{
-  threshold: 0.4,
-}
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            setAboutIsActive(true);
+          }, 350);
+        } else {
+          setAboutIsActive(false);
+        }
+      },
+      {
+        threshold: 0.4,
+      }
     );
 
     observer.observe(aboutSection);
@@ -47,112 +49,23 @@ export default function Home({ theme, onToggleTheme }) {
 
   return (
     <div className={`app-shell theme-${theme}`}>
-      <Navbar theme={theme} onToggleTheme={onToggleTheme} />
+      <Navbar
+        theme={theme}
+        onToggleTheme={onToggleTheme}
+      />
 
       <main>
-        {/* HERO */}
-        <section className="hero page-shell">
-          <div className="hero-eyebrow">
-            <span className="eyebrow-line" />
-            INDEPENDENT DESIGNER · INDIA
-          </div>
 
-          <h1>
-            I make things
-            <br />
-            <span className="hero-italic">mean</span> something.
-          </h1>
-
-          <div className="hero-bottom">
-            <p className="hero-description">
-              Exploring the space between thoughtful strategy,
-              visual identity, and expressive design. Creating
-              work that looks different because it thinks
-              differently.
-            </p>
-
-            <a className="text-link" href="#selected-work">
-              Explore selected work <span>↓</span>
-            </a>
-          </div>
-
-          <div className="hero-index">
-            <span>PORTFOLIO</span>
-            <span>2023 — 2026</span>
-          </div>
-        </section>
-
-        {/* SELECTED WORK */}
-        <section
-          id="selected-work"
-          className="selected-work-section page-shell"
-        >
-          <div className="section-heading">
-            <div>
-              <span className="section-kicker">
-                01 / THE ARCHIVE
-              </span>
-
-              <h2>
-                Selected work<span className="period">.</span>
-              </h2>
-            </div>
-
-            <span className="work-count">
-              {String(visibleProjects.length).padStart(2, "0")} PROJECTS
-            </span>
-          </div>
-
-          {/* CATEGORY FILTERS */}
-          <div className="filter-list" aria-label="Filter projects">
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                className={
-                  activeCategory === category
-                    ? "filter-button active"
-                    : "filter-button"
-                }
-                onClick={() => setActiveCategory(category)}
-                aria-pressed={activeCategory === category}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* PROJECT GALLERY */}
-          
-<div className="project-grid reference-project-grid">
-  {visibleProjects.length > 0 ? (
-    visibleProjects.map((project, index) => (
-      <ProjectCard
-        key={project.id}
-        project={project}
-        index={index}
-      />
-    ))
-  ) : (
-    <p className="empty-state">
-      No featured projects in this category yet.
-      More work is on its way.
-    </p>
-  )}
-</div>
-
-        </section>
-
-        {/* ABOUT */}
+        {/* ABOUT - FIRST SECTION */}
         <section id="about" className="about-section">
           <Constellation
-  theme={theme}
-  interactiveGlow
-/>
+            theme={theme}
+            interactiveGlow
+          />
 
           <div className="page-shell about-inner">
             <span className="section-kicker">
-              02 / A LITTLE ABOUT ME
+              01 / A LITTLE ABOUT ME
             </span>
 
             <div className="about-layout">
@@ -175,12 +88,15 @@ export default function Home({ theme, onToggleTheme }) {
                     serves the idea.
                   </p>
 
-                  
-                  <Link to="/about" className="about-learn-more">
-  <span>Learn More</span>
-  <span className="about-learn-more-arrow">↗</span>
-</Link>
-
+                  <Link
+                    to="/about"
+                    className="about-learn-more"
+                  >
+                    <span>Learn More</span>
+                    <span className="about-learn-more-arrow">
+                      ↗
+                    </span>
+                  </Link>
                 </div>
               </div>
 
@@ -211,12 +127,78 @@ export default function Home({ theme, onToggleTheme }) {
             </div>
           </div>
         </section>
-      </main>
 
+        {/* SELECTED WORK - SECOND SECTION */}
+        <section
+          id="selected-work"
+          className="selected-work-section page-shell"
+        >
+          <div className="section-heading">
+            <div>
+              <span className="section-kicker">
+                02 / THE ARCHIVE
+              </span>
+
+              <h2>
+                A few dishes I've cooked<span className="period">.</span>
+              </h2>
+            </div>
+
+            <span className="work-count">
+              {String(visibleProjects.length).padStart(2, "0")} PROJECTS
+            </span>
+          </div>
+
+          {/* CATEGORY FILTERS */}
+          <div
+            className="filter-list"
+            aria-label="Filter projects"
+          >
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                className={
+                  activeCategory === category
+                    ? "filter-button active"
+                    : "filter-button"
+                }
+                onClick={() => setActiveCategory(category)}
+                aria-pressed={activeCategory === category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* PROJECT GALLERY */}
+          <div className="project-grid reference-project-grid">
+            {visibleProjects.length > 0 ? (
+              visibleProjects.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                />
+              ))
+            ) : (
+              <p className="empty-state">
+                No featured projects in this category yet.
+                More work is on its way.
+              </p>
+            )}
+          </div>
+        </section>
+
+      </main>
+      
+
+      {/* CONTACT */}
       <div id="contact">
         <ContactCTA />
       </div>
 
+      {/* FOOTER */}
       <Footer />
     </div>
   );

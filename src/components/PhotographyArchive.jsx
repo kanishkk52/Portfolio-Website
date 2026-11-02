@@ -14,12 +14,26 @@ const photographs = Array.from({ length: 18 }, (_, index) => {
   };
 });
 
-export default function PhotographyArchive() {
+export default function PhotographyArchive({
+  photographerMode = false,
+  onExitPhotographerMode,
+}) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const closeViewer = useCallback(() => {
     setActiveIndex(null);
   }, []);
+  // Lock background scrolling in Photographer Mode
+useEffect(() => {
+  if (!photographerMode) return;
+
+  const previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+
+  return () => {
+    document.body.style.overflow = previousOverflow;
+  };
+}, [photographerMode]);
 
   const showPrevious = useCallback(() => {
     setActiveIndex((current) => {
@@ -73,10 +87,31 @@ export default function PhotographyArchive() {
   return (
     <>
       <section
-        className="photo-archive"
-        aria-label="Photography archive"
-      >
+  id="photo-archive"
+  className={`photo-archive ${
+    photographerMode ? "photographer-mode" : ""
+  }`}
+  aria-label="Photography archive"
+>
         <div className="photo-archive-noise" aria-hidden="true" />
+        {photographerMode && (
+  <div className="photographer-mode-bar">
+    <div>
+      <span className="photographer-live-dot" />
+      <span>PHOTOGRAPHER MODE</span>
+      <span className="photographer-mode-divider">/</span>
+      <span>KK® VISUAL ARCHIVE</span>
+    </div>
+
+    <button
+      type="button"
+      onClick={onExitPhotographerMode}
+      className="photographer-mode-exit"
+    >
+      EXIT MODE <span>×</span>
+    </button>
+  </div>
+)}
 
         {/* CINEMATIC INTRO */}
         <div className="photo-archive-header">

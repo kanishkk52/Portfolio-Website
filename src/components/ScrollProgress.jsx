@@ -1,21 +1,32 @@
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
+    let animationFrame;
+
     const updateProgress = () => {
-      const root = document.documentElement;
-      const scrollableHeight =
-        root.scrollHeight - window.innerHeight;
+      cancelAnimationFrame(animationFrame);
 
-      const value =
-        scrollableHeight > 0
-          ? (window.scrollY / scrollableHeight) * 100
-          : 0;
+      animationFrame = requestAnimationFrame(() => {
+        const scrollableHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
 
-      setProgress(Math.min(100, Math.max(0, value)));
+        const progress =
+          scrollableHeight > 0
+            ? Math.min(
+                1,
+                Math.max(0, window.scrollY / scrollableHeight)
+              )
+            : 0;
+
+        document
+          .querySelector(".nav-shell")
+          ?.style.setProperty("--page-progress", progress);
+      });
     };
 
     updateProgress();
@@ -23,20 +34,15 @@ export default function ScrollProgress() {
     window.addEventListener("scroll", updateProgress, {
       passive: true,
     });
+
     window.addEventListener("resize", updateProgress);
 
     return () => {
+      cancelAnimationFrame(animationFrame);
       window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("resize", updateProgress);
     };
-  }, []);
+  }, [location.pathname]);
 
-  return (
-    <div className="scroll-progress-track" aria-hidden="true">
-      <div
-        className="scroll-progress-fill"
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  );
+  return null;
 }

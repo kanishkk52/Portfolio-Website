@@ -78,7 +78,12 @@ const certifications = [
 ];
 
 
-export default function About({ theme, onToggleTheme }) {
+export default function About({
+  theme,
+  onToggleTheme,
+  photographerMode = false,
+  onExitPhotographerMode,
+}) {
   return (
     <div className={`app-shell theme-${theme}`}>
       <Navbar theme={theme} onToggleTheme={onToggleTheme} />
@@ -273,7 +278,11 @@ export default function About({ theme, onToggleTheme }) {
         </section>
 
         {/* PHOTOGRAPHY ARCHIVE */}
-<PhotographyArchive />
+{/* PHOTOGRAPHY ARCHIVE */}
+<PhotographyArchive
+  photographerMode={photographerMode}
+  onExitPhotographerMode={onExitPhotographerMode}
+/>
 
         {/* CLOSING */}
         <section className="about-page-closing">

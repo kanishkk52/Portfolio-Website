@@ -827,3 +827,192 @@ html.has-custom-cursor .photo-lightbox * {
     cursor: auto !important;
   }
 }
+
+
+/* =========================================
+   KK® PHOTOGRAPHER MODE
+========================================= */
+
+.photo-archive.photographer-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: clamp(22px, 5vw, 76px);
+  background: #101010;
+  color: #f5f2ea;
+  scrollbar-width: thin;
+  scrollbar-color: #777 #101010;
+  animation: photographerModeEnter 0.65s ease both;
+}
+
+.photo-archive.photographer-mode .photo-archive-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.photo-archive.photographer-mode .photo-archive-header,
+.photo-archive.photographer-mode .photo-feature,
+.photo-archive.photographer-mode .photo-gallery-heading,
+.photo-archive.photographer-mode .photo-masonry,
+.photo-archive.photographer-mode .photo-archive-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.photo-archive.photographer-mode .photo-archive-header {
+  margin-top: 28px;
+}
+
+.photo-archive.photographer-mode .photo-archive-kicker,
+.photo-archive.photographer-mode .photo-archive-eyebrow,
+.photo-archive.photographer-mode .photo-feature-caption,
+.photo-archive.photographer-mode .photo-masonry-caption,
+.photo-archive.photographer-mode .photo-gallery-count,
+.photo-archive.photographer-mode .photo-archive-footer {
+  color: rgba(245, 242, 234, 0.65);
+}
+
+.photo-archive.photographer-mode .photo-archive-heading h2,
+.photo-archive.photographer-mode .photo-gallery-heading h3 {
+  color: #f5f2ea;
+}
+
+.photo-archive.photographer-mode .photo-feature-image,
+.photo-archive.photographer-mode .photo-masonry-image {
+  background: #1c1c1c;
+}
+
+.photo-archive.photographer-mode .photo-masonry-item img,
+.photo-archive.photographer-mode .photo-feature-image img {
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.6s ease;
+  filter: saturate(0.85);
+}
+
+.photo-archive.photographer-mode .photo-masonry-item:hover img,
+.photo-archive.photographer-mode .photo-feature-image:hover img {
+  transform: scale(1.035);
+  filter: saturate(1.1);
+}
+
+/* Mode status bar */
+
+.photographer-mode-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(245, 242, 234, 0.2);
+  color: #f5f2ea;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.photographer-mode-bar > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.photographer-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d6f36a;
+  box-shadow: 0 0 12px rgba(214, 243, 106, 0.65);
+  animation: photographerPulse 1.8s ease infinite;
+}
+
+.photographer-mode-divider {
+  opacity: 0.4;
+}
+
+.photographer-mode-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 13px;
+  border: 1px solid rgba(245, 242, 234, 0.4);
+  background: transparent;
+  color: #f5f2ea;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.photographer-mode-exit:hover {
+  background: #f5f2ea;
+  color: #101010;
+}
+
+.photographer-mode-exit span {
+  font-size: 17px;
+}
+
+/* Entry animation */
+
+@keyframes photographerModeEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes photographerPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .photo-archive.photographer-mode {
+    padding: 20px;
+  }
+
+  .photographer-mode-bar {
+    align-items: flex-start;
+    font-size: 8px;
+  }
+
+  .photographer-mode-bar > div {
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .photographer-mode-exit {
+    white-space: nowrap;
+    padding: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-archive.photographer-mode,
+  .photographer-live-dot {
+    animation: none;
+  }
+}

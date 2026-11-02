@@ -7816,3 +7816,509 @@ body:has(.theme-light) {
     gap: 22px;
   }
 }
+
+
+/* =========================================
+   HOME PORTRAIT - THEME BASED COLOR
+========================================= */
+
+/* Light theme: Full color */
+.theme-light .about-portrait img {
+  filter: grayscale(0%);
+  transition: filter 0.8s ease;
+}
+
+/* Dark theme: Grayscale */
+.theme-dark .about-portrait img {
+  filter: grayscale(100%);
+  transition: filter 0.8s ease;
+}
+
+/* Preserve the existing portrait reveal behavior */
+.theme-light .about-portrait.portrait-active img {
+  filter: grayscale(0%);
+}
+
+.theme-dark .about-portrait.portrait-active img {
+  filter: grayscale(100%);
+}
+
+
+/* =========================================
+   KK® KONAMI CODE EASTER EGG
+========================================= */
+
+.konami-unlock-toast {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 17px 20px;
+  background: #151515;
+  color: #f5f2ea;
+  border: 1px solid rgba(214, 243, 106, 0.6);
+  box-shadow: 6px 6px 0 #d6f36a;
+  animation: konamiToastEnter 0.5s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.konami-unlock-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  background: #d6f36a;
+  color: #151515;
+  font-size: 25px;
+  animation: konamiIconSpin 1.5s ease-in-out;
+}
+
+.konami-unlock-toast > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.konami-unlock-toast > div:nth-child(2) span,
+.konami-unlock-toast > div:nth-child(2) strong {
+  font-family: inherit;
+}
+
+.konami-unlock-toast > div:nth-child(2) span {
+  color: #d6f36a;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+}
+
+.konami-unlock-toast > div:nth-child(2) strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.konami-unlock-code {
+  margin-left: auto;
+  color: rgba(245, 242, 234, 0.5);
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+@keyframes konamiToastEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes konamiIconSpin {
+  from {
+    transform: rotate(-180deg) scale(0.4);
+  }
+
+  to {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@media (max-width: 500px) {
+  .konami-unlock-toast {
+    top: 15px;
+    right: 15px;
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .konami-unlock-code {
+    display: none;
+  }
+}
+
+
+/* ==========================================
+   KK® NEO-BRUTALIST NAVBAR
+========================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 12px clamp(14px, 3vw, 42px);
+  transition: background 0.3s ease;
+}
+
+.nav-shell {
+  max-width: 1600px;
+  min-height: 76px;
+  margin: 0 auto;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+
+  border: 1.5px solid var(--nav-border, #171717);
+  border-radius: 3px;
+  background: var(--nav-bg, #f5f2ea);
+  box-shadow: 5px 5px 0 var(--nav-shadow, #171717);
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* BRAND */
+
+.wordmark {
+  color: var(--nav-text, #171717);
+  font-size: 21px;
+  font-weight: 850;
+  letter-spacing: -1.2px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wordmark span {
+  color: var(--nav-accent, #171717);
+  font-size: 11px;
+  vertical-align: top;
+  margin-left: 2px;
+}
+
+.nav-note {
+  color: var(--nav-muted, #666);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* NAVIGATION */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-links > a:not(.availability) {
+  position: relative;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  color: var(--nav-text, #171717);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nav-links > a:not(.availability):hover {
+  border-color: var(--nav-border, #171717);
+  background: var(--nav-hover, #e9e5da);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--nav-shadow, #171717);
+}
+
+.nav-links > a.nav-active:not(.availability) {
+  border: 1px solid var(--nav-border, #171717);
+  background: var(--nav-accent-bg, #d6f36a);
+  color: #171717;
+  box-shadow: 2px 2px 0 var(--nav-shadow, #171717);
+}
+
+/* AVAILABILITY */
+
+.nav-links > .availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  padding: 11px 13px;
+  border: 1.5px solid var(--nav-border, #171717);
+  background: var(--nav-accent-bg, #d6f36a);
+  color: #171717;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 var(--nav-shadow, #171717);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nav-links > .availability:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--nav-shadow, #171717);
+}
+
+.availability-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #287d43;
+  box-shadow: 0 0 0 3px rgba(40, 125, 67, 0.13);
+}
+
+/* THEME TOGGLE */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  margin-left: 6px;
+  padding: 9px 13px;
+
+  border: 1.5px solid var(--nav-border, #171717);
+  border-radius: 2px;
+  background: var(--nav-text, #171717);
+  color: var(--nav-bg, #f5f2ea);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+
+  box-shadow: 3px 3px 0 var(--nav-shadow, #171717);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--nav-shadow, #171717);
+}
+
+.theme-toggle > span:first-child {
+  font-size: 17px;
+}
+
+/* LIGHT THEME */
+
+.theme-light .site-header {
+  --nav-bg: #f5f2ea;
+  --nav-text: #171717;
+  --nav-muted: #68645d;
+  --nav-border: #171717;
+  --nav-shadow: #171717;
+  --nav-hover: #e9e5da;
+  --nav-accent-bg: #d6f36a;
+}
+
+/* DARK THEME */
+
+.theme-dark .site-header {
+  --nav-bg: #202020;
+  --nav-text: #f5f2ea;
+  --nav-muted: #aaa69d;
+  --nav-border: #f5f2ea;
+  --nav-shadow: #d6f36a;
+  --nav-hover: #303030;
+  --nav-accent-bg: #d6f36a;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .nav-note {
+    display: none;
+  }
+
+  .nav-shell {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    padding: 9px 12px;
+  }
+
+  .nav-shell {
+    min-height: auto;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .wordmark {
+    font-size: 19px;
+  }
+
+  .nav-links {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .nav-links > a:not(.availability) {
+    padding: 10px 11px;
+    font-size: 9px;
+  }
+
+  .nav-links > .availability {
+    margin-left: 0;
+    padding: 10px;
+    font-size: 8px;
+  }
+
+  .theme-toggle {
+    min-height: 37px;
+    padding: 7px 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .nav-links > a:not(.availability) {
+    text-align: center;
+    padding: 10px 4px;
+  }
+
+  .nav-links > .availability {
+    grid-column: span 3;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    grid-column: span 1;
+    margin-left: 0;
+  }
+}
+
+
+/* ==========================================
+   KK® NAVBAR — DARK THEME CONTRAST FIX
+========================================== */
+
+.theme-dark .site-header .nav-shell {
+  --nav-shadow: #f5f2ea;
+}
+
+/* Theme toggle */
+.theme-dark .site-header .theme-toggle {
+  background: #f5f2ea !important;
+  color: #171717 !important;
+  border: 1.5px solid #f5f2ea !important;
+  box-shadow: 3px 3px 0 #d6f36a !important;
+}
+
+.theme-dark .site-header .theme-toggle > span {
+  color: #171717 !important;
+}
+
+.theme-dark .site-header .theme-toggle:hover {
+  background: #d6f36a !important;
+  border-color: #d6f36a !important;
+  color: #171717 !important;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #f5f2ea !important;
+}
+
+/* Availability button */
+.theme-dark .site-header .availability {
+  background: #d6f36a !important;
+  color: #171717 !important;
+  border: 1.5px solid #f5f2ea !important;
+  box-shadow: 3px 3px 0 #f5f2ea !important;
+}
+
+.theme-dark .site-header .availability:hover {
+  box-shadow: 1px 1px 0 #f5f2ea !important;
+}
+
+/* Light theme availability shadow */
+.theme-light .site-header .availability {
+  box-shadow: 3px 3px 0 #171717;
+}
+
+
+/* ==========================================
+   KK® GRADIENT NAVBAR PROGRESS
+========================================== */
+
+.nav-shell {
+  position: relative;
+  --page-progress: 0;
+}
+
+/* Gradient progress line */
+.nav-shell::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #d6f36a 0%,
+    #a8dc84 35%,
+    #8bc9ce 70%,
+    #d6f36a 100%
+  );
+
+  transform: scaleX(var(--page-progress, 0));
+  transform-origin: left center;
+
+  pointer-events: none;
+  z-index: 10;
+  transition: transform 0.08s linear;
+}
+
+
+/* ==========================================
+   PHOTOGRAPHER MODE — HIDE NORMAL NAVBAR
+========================================== */
+
+body.photographer-mode-active .site-header {
+  display: none !important;
+}
+
+body.photographer-mode-active .nav-shell {
+  display: none !important;
+}
+
+/* Hide any remaining scroll progress indicator */
+body.photographer-mode-active .scroll-progress,
+body.photographer-mode-active .scroll-progress-bar {
+  display: none !important;
+}
+
+/* Photographer mode takes visual priority */
+.photo-archive.photographer-mode {
+  z-index: 15000;
+}
+
+/* Keep fullscreen image viewer above everything */
+.photo-lightbox {
+  z-index: 16000;
+}
