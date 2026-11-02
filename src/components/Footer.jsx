@@ -20,11 +20,11 @@ export default function Footer() {
         </a>
 
         <a
-          href="https://www.behance.net/"
+          href="https://www.linkedin.com/in/kanishkkukreja"
           target="_blank"
           rel="noreferrer"
         >
-          Behance ↗
+          LinkedIn ↗
         </a>
 
         <Link to="/contact">Contact ↗</Link>

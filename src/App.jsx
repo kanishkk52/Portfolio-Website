@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import {
   BrowserRouter,
@@ -173,7 +172,6 @@ useEffect(() => {
         return;
       }
       
-
 
       // KONAMI CODE
       const pressedKey =
