@@ -70,6 +70,12 @@ const certifications = [
     url: "https://drive.google.com/file/d/1AUMsM2DwN4bQ5_v-LwHVo0Akx62Mok4f/view?usp=sharing",
   },
   {
+    title: "Deep Learning - IIT Ropar",
+    issuer: "NPTEL",
+    detail: "Elite Certification in NPTEL 12-Week course on Deep Learning.",
+    url: "https://drive.google.com/file/d/1tiTQHgK32TGJroO7zVziL6CUkHFlfV5G/view?usp=sharing",
+  },
+  {
     title: "Japani Bhasha",
     issuer: "NPTEL",
     detail: "Top Silver Elite Certificate holder in NPTEL 12-Week course on the Japanese Language.",
