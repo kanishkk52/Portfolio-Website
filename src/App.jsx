@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";
 import {
   BrowserRouter,
@@ -371,6 +372,7 @@ function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
       />
+      <Analytics />
     </BrowserRouter>
   );
 }
