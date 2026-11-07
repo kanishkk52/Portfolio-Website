@@ -76,6 +76,12 @@ const certifications = [
     url: "https://drive.google.com/file/d/1tiTQHgK32TGJroO7zVziL6CUkHFlfV5G/view?usp=sharing",
   },
   {
+    title: "Reinforcement Learning",
+    issuer: "NPTEL",
+    detail: "Certification in NPTEL 12-Week course on Deep Learning.",
+    url: "https://drive.google.com/file/d/19UwtM6XwivzNkBZxUZhynSjLTOBd9TmN/view?usp=sharing",
+  },
+  {
     title: "Japani Bhasha",
     issuer: "NPTEL",
     detail: "Top Silver Elite Certificate holder in NPTEL 12-Week course on the Japanese Language.",
