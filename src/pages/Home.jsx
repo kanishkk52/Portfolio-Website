@@ -79,25 +79,39 @@ export default function Home({ theme, onToggleTheme }) {
                   by design.
                 </h2>
 
-                <div className="about-bottom">
-                  <p>
-                    I'm an independent graphic designer interested in
-                    building visual identities, digital experiences,
-                    and tangible things. My approach moves between
-                    minimalism, experimentation, and whatever best
-                    serves the idea.
-                  </p>
+                <div className="about-bottom home-intro">
+  <p>
+    I'm Kanishk Kukreja, an independent graphic designer creating
+    visual identities, editorial design, and event experiences.
+    I turn ideas into thoughtful design for brands, publications,
+    and real-world spaces.
+  </p>
 
-                  <Link
-                    to="/about"
-                    className="about-learn-more"
-                  >
-                    <span>Learn More</span>
-                    <span className="about-learn-more-arrow">
-                      ↗
-                    </span>
-                  </Link>
-                </div>
+  <div className="home-intro-actions">
+    <Link
+      to="/work"
+      className="home-intro-button home-intro-primary"
+    >
+      <span>View Selected Work</span>
+      <span aria-hidden="true">↗</span>
+    </Link>
+
+    <Link
+      to="/contact"
+      className="home-intro-button home-intro-secondary"
+    >
+      <span>Get in Touch</span>
+      <span aria-hidden="true">↗</span>
+    </Link>
+    <Link
+  to="/about"
+  className="home-intro-button home-intro-secondary"
+>
+  <span>Learn More</span>
+  <span aria-hidden="true">↗</span>
+</Link>
+  </div>
+</div>
               </div>
 
               {/* PORTRAIT */}
